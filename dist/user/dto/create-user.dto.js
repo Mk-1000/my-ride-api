@@ -34,4 +34,8 @@ __decorate([
     (0, swagger_1.ApiProperty)({ example: 'https://www.facebook.com/photo/?fbid=128057343018499&set=a.117363367421230', description: 'Profile picture URL', required: false }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "profilePictureUrl", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'CUSTOMER', description: 'The type of user', required: true }),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "userType", void 0);
 //# sourceMappingURL=create-user.dto.js.map

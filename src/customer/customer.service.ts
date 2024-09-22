@@ -14,7 +14,10 @@ export class CustomerService {
   ) {}
 
   async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
-    const user = await this.userService.create(createCustomerDto.user); // Create the user
+    const user = await this.userService.create({
+      ...createCustomerDto.user,
+      userType: 'CUSTOMER' // Set userType to 'CUSTOMER' 
+    }); // Create the user
     const customer = this.customerRepository.create({
       ...createCustomerDto,
       user,

@@ -41,11 +41,15 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "profilePictureUrl", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => rider_entity_1.Rider, (rider) => rider.user, { nullable: true }),
+    (0, typeorm_1.Column)({ default: 'CUSTOMER' }),
+    __metadata("design:type", String)
+], User.prototype, "userType", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => rider_entity_1.Rider, (rider) => rider.user, { nullable: true, onDelete: 'CASCADE' }),
     __metadata("design:type", rider_entity_1.Rider)
 ], User.prototype, "rider", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => customer_entity_1.Customer, (customer) => customer.user, { nullable: true }),
+    (0, typeorm_1.OneToOne)(() => customer_entity_1.Customer, (customer) => customer.user, { nullable: true, onDelete: 'CASCADE' }),
     __metadata("design:type", customer_entity_1.Customer)
 ], User.prototype, "customer", void 0);
 exports.User = User = __decorate([

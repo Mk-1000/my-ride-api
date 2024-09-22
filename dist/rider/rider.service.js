@@ -12,34 +12,37 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CustomerService = void 0;
+exports.RiderService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const customer_entity_1 = require("../entities/customer.entity");
+const rider_entity_1 = require("../entities/rider.entity");
 const user_service_1 = require("../user/user.service");
-let CustomerService = class CustomerService {
-    constructor(customerRepository, userService) {
-        this.customerRepository = customerRepository;
+let RiderService = class RiderService {
+    constructor(riderRepository, userService) {
+        this.riderRepository = riderRepository;
         this.userService = userService;
     }
-    async create(createCustomerDto) {
-        const user = await this.userService.create(createCustomerDto.user);
-        const customer = this.customerRepository.create({
-            ...createCustomerDto,
+    async create(createRiderDto) {
+        const user = await this.userService.create({
+            ...createRiderDto.user,
+            userType: 'RIDER'
+        });
+        const rider = this.riderRepository.create({
+            ...createRiderDto,
             user,
         });
-        return this.customerRepository.save(customer);
+        return this.riderRepository.save(rider);
     }
     async findAll() {
-        return this.customerRepository.find({ relations: ['user'] });
+        return this.riderRepository.find({ relations: ['user'] });
     }
 };
-exports.CustomerService = CustomerService;
-exports.CustomerService = CustomerService = __decorate([
+exports.RiderService = RiderService;
+exports.RiderService = RiderService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(customer_entity_1.Customer)),
+    __param(0, (0, typeorm_1.InjectRepository)(rider_entity_1.Rider)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         user_service_1.UserService])
-], CustomerService);
+], RiderService);
 //# sourceMappingURL=rider.service.js.map

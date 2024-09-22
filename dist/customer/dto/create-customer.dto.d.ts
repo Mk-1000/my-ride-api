@@ -5,6 +5,7 @@ export declare class CreateCustomerDto {
         password: string;
         phoneNumber?: string;
         profilePictureUrl?: string;
+        userType: string;
     };
     address?: string;
     loyaltyPoints?: number;

@@ -1,28 +1,18 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Rider } from '../entities/rider.entity';
-import { UserService } from '../user/user.service';
-import { CreateRiderDto } from './dto/create-rider.dto';
+import { Test, TestingModule } from '@nestjs/testing';
+import { RiderService } from './rider.service';
 
-@Injectable()
-export class RiderService {
-  constructor(
-    @InjectRepository(Rider)
-    private riderRepository: Repository<Rider>,
-    private userService: UserService,
-  ) {}
+describe('RiderService', () => {
+  let service: RiderService;
 
-  async create(createRiderDto: CreateRiderDto): Promise<Rider> {
-    const user = await this.userService.create(createRiderDto.user); // Create the user
-    const rider = this.riderRepository.create({
-      ...createRiderDto,
-      user,
-    });
-    return this.riderRepository.save(rider);
-  }
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [RiderService],
+    }).compile();
 
-  async findAll(): Promise<Rider[]> {
-    return this.riderRepository.find({ relations: ['user'] });
-  }
-}
+    service = module.get<RiderService>(RiderService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});

@@ -7,6 +7,7 @@ export declare class User {
     encryptedPassword: string;
     phoneNumber: string;
     profilePictureUrl: string;
+    userType: string;
     rider: Rider;
     customer: Customer;
 }

@@ -16,7 +16,7 @@ exports.RiderController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const create_rider_dto_1 = require("./dto/create-rider.dto");
-const rider_service_spec_1 = require("./rider.service.spec");
+const rider_service_1 = require("./rider.service");
 let RiderController = class RiderController {
     constructor(riderService) {
         this.riderService = riderService;
@@ -47,6 +47,6 @@ __decorate([
 exports.RiderController = RiderController = __decorate([
     (0, swagger_1.ApiTags)('riders'),
     (0, common_1.Controller)('riders'),
-    __metadata("design:paramtypes", [rider_service_spec_1.RiderService])
+    __metadata("design:paramtypes", [rider_service_1.RiderService])
 ], RiderController);
 //# sourceMappingURL=rider.controller.js.map

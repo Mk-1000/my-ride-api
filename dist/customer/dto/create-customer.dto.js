@@ -15,7 +15,17 @@ class CreateCustomerDto {
 }
 exports.CreateCustomerDto = CreateCustomerDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'User information' }),
+    (0, swagger_1.ApiProperty)({
+        description: 'User information',
+        example: {
+            name: "Mokni Hamdi",
+            email: "hamdi@gmail.com",
+            password: "password123",
+            phoneNumber: "50430778",
+            profilePictureUrl: "https://www.facebook.com/photo/?fbid=128057343018499&set=a.117363367421230",
+            userType: "CUSTOMER"
+        }
+    }),
     __metadata("design:type", Object)
 ], CreateCustomerDto.prototype, "user", void 0);
 __decorate([

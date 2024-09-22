@@ -24,7 +24,10 @@ let CustomerService = class CustomerService {
         this.userService = userService;
     }
     async create(createCustomerDto) {
-        const user = await this.userService.create(createCustomerDto.user);
+        const user = await this.userService.create({
+            ...createCustomerDto.user,
+            userType: 'CUSTOMER'
+        });
         const customer = this.customerRepository.create({
             ...createCustomerDto,
             user,

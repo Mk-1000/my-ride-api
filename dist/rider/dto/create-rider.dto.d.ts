@@ -5,6 +5,7 @@ export declare class CreateRiderDto {
         password: string;
         phoneNumber?: string;
         profilePictureUrl?: string;
+        userType: string;
     };
     licenseNumber: string;
     licenseImageUrl?: string;

@@ -12,7 +12,7 @@ export class Rider {
   @Column({ nullable: true })
   licenseImageUrl: string;
 
-  @OneToOne(() => User, (user) => user.rider, { nullable: false })
+  @OneToOne(() => User, (user) => user.rider, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn()  // This creates a foreign key column in the Rider table
   user: User;
 }

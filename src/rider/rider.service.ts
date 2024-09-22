@@ -1,28 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateCustomerDto } from 'src/customer/dto/create-customer.dto';
 import { Repository } from 'typeorm';
-import { Customer } from '../entities/customer.entity';
+import { Rider } from '../entities/rider.entity';
 import { UserService } from '../user/user.service';
+import { CreateRiderDto } from './dto/create-rider.dto';
 
 @Injectable()
-export class CustomerService {
+export class RiderService {
   constructor(
-    @InjectRepository(Customer)
-    private customerRepository: Repository<Customer>,
+    @InjectRepository(Rider)
+    private riderRepository: Repository<Rider>,
     private userService: UserService,
   ) {}
 
-  async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
-    const user = await this.userService.create(createCustomerDto.user); // Create the user
-    const customer = this.customerRepository.create({
-      ...createCustomerDto,
+  async create(createRiderDto: CreateRiderDto): Promise<Rider> {
+    // Create the user with userType 'RIDER'
+    const user = await this.userService.create({
+      ...createRiderDto.user,
+      userType: 'RIDER' // Set userType to 'RIDER'
+    }); 
+
+    // Create the rider
+    const rider = this.riderRepository.create({
+      ...createRiderDto,
       user,
     });
-    return this.customerRepository.save(customer);
+
+    return this.riderRepository.save(rider);
   }
 
-  async findAll(): Promise<Customer[]> {
-    return this.customerRepository.find({ relations: ['user'] });
+  async findAll(): Promise<Rider[]> {
+    return this.riderRepository.find({ relations: ['user'] });
   }
 }

@@ -6,7 +6,7 @@ export class Customer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => User, (user) => user.customer, { nullable: false })
+  @OneToOne(() => User, (user) => user.customer, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn()  // This decorator creates a foreign key column in the Customer table
   user: User;
 

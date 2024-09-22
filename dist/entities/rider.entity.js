@@ -28,7 +28,7 @@ __decorate([
     __metadata("design:type", String)
 ], Rider.prototype, "licenseImageUrl", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => user_entity_1.User, (user) => user.rider, { nullable: false }),
+    (0, typeorm_1.OneToOne)(() => user_entity_1.User, (user) => user.rider, { nullable: false, onDelete: 'CASCADE' }),
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", user_entity_1.User)
 ], Rider.prototype, "user", void 0);

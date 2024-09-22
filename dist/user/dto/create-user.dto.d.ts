@@ -4,4 +4,5 @@ export declare class CreateUserDto {
     password: string;
     phoneNumber?: string;
     profilePictureUrl?: string;
+    userType: string;
 }

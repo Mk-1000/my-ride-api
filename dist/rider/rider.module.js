@@ -12,7 +12,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const rider_entity_1 = require("../entities/rider.entity");
 const user_module_1 = require("../user/user.module");
 const rider_controller_1 = require("./rider.controller");
-const rider_service_spec_1 = require("./rider.service.spec");
+const rider_service_1 = require("./rider.service");
 let RiderModule = class RiderModule {
 };
 exports.RiderModule = RiderModule;
@@ -23,7 +23,7 @@ exports.RiderModule = RiderModule = __decorate([
             user_module_1.UserModule,
         ],
         controllers: [rider_controller_1.RiderController],
-        providers: [rider_service_spec_1.RiderService],
+        providers: [rider_service_1.RiderService],
     })
 ], RiderModule);
 //# sourceMappingURL=rider.module.js.map

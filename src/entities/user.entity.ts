@@ -22,9 +22,12 @@ export class User {
   @Column({ nullable: true })
   profilePictureUrl: string;
 
-  @OneToOne(() => Rider, (rider) => rider.user, { nullable: true })
+  @Column({ default: 'CUSTOMER' }) // Add userType column
+  userType: string; 
+
+  @OneToOne(() => Rider, (rider) => rider.user, { nullable: true, onDelete: 'CASCADE' })
   rider: Rider;
 
-  @OneToOne(() => Customer, (customer) => customer.user, { nullable: true })
+  @OneToOne(() => Customer, (customer) => customer.user, { nullable: true, onDelete: 'CASCADE' })
   customer: Customer;
 }
