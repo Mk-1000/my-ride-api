@@ -14,7 +14,7 @@ import { UserModule } from './user/user.module';
       port: parseInt(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
+      database: process.env.DB_NAME, // Change this to DB_NAME
       autoLoadEntities: true, // Automatically load entities (models)
       synchronize: true, // Set to false in production to avoid data loss
     }),
