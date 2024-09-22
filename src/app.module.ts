@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CustomerModule } from './customer/customer.module';
+import { RiderModule } from './rider/rider.module';
 import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // makes the config available globally
+      isGlobal: true,
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -14,11 +16,13 @@ import { UserModule } from './user/user.module';
       port: parseInt(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME, // Change this to DB_NAME
-      autoLoadEntities: true, // Automatically load entities (models)
-      synchronize: true, // Set to false in production to avoid data loss
+      database: process.env.DB_NAME,
+      autoLoadEntities: true,
+      synchronize: true,
     }),
     UserModule,
+    RiderModule,
+    CustomerModule,
   ],
 })
 export class AppModule {}

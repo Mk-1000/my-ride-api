@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Customer } from './customer.entity';
+import { Rider } from './rider.entity';
 
 @Entity()
 export class User {
@@ -12,11 +14,17 @@ export class User {
   email: string;
 
   @Column()
-  encryptedPassword: string; // This will store the hashed password
+  encryptedPassword: string;
 
   @Column({ nullable: true })
   phoneNumber: string;
 
   @Column({ nullable: true })
   profilePictureUrl: string;
+
+  @OneToOne(() => Rider, (rider) => rider.user, { nullable: true })
+  rider: Rider;
+
+  @OneToOne(() => Customer, (customer) => customer.user, { nullable: true })
+  customer: Customer;
 }
