@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CarModule } from './car/car.module';
 import { CustomerModule } from './customer/customer.module';
 import { RiderModule } from './rider/rider.module';
 import { UserModule } from './user/user.module';
@@ -23,6 +24,7 @@ import { UserModule } from './user/user.module';
     UserModule,
     RiderModule,
     CustomerModule,
+    CarModule,
   ],
 })
 export class AppModule {}

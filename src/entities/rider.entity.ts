@@ -1,4 +1,5 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Car } from './car.entity';
 import { User } from './user.entity';
 
 @Entity()
@@ -13,6 +14,9 @@ export class Rider {
   licenseImageUrl: string;
 
   @OneToOne(() => User, (user) => user.rider, { nullable: false, onDelete: 'CASCADE' })
-  @JoinColumn()  // This creates a foreign key column in the Rider table
+  @JoinColumn()
   user: User;
+
+  @OneToMany(() => Car, (car) => car.rider)
+  cars: Car[];
 }

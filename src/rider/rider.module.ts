@@ -8,9 +8,10 @@ import { RiderService } from './rider.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Rider]),
-    UserModule, // Make sure UserModule is imported
+    UserModule, // Ensure UserModule is imported
   ],
   controllers: [RiderController],
   providers: [RiderService],
+  exports: [RiderService], // Export RiderService to be available in other modules
 })
 export class RiderModule {}

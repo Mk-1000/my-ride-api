@@ -8,4 +8,5 @@ export declare class RiderService {
     constructor(riderRepository: Repository<Rider>, userService: UserService);
     create(createRiderDto: CreateRiderDto): Promise<Rider>;
     findAll(): Promise<Rider[]>;
+    findOne(id: number): Promise<Rider>;
 }

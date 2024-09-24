@@ -10,6 +10,7 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
+const car_module_1 = require("./car/car.module");
 const customer_module_1 = require("./customer/customer.module");
 const rider_module_1 = require("./rider/rider.module");
 const user_module_1 = require("./user/user.module");
@@ -35,6 +36,7 @@ exports.AppModule = AppModule = __decorate([
             user_module_1.UserModule,
             rider_module_1.RiderModule,
             customer_module_1.CustomerModule,
+            car_module_1.CarModule,
         ],
     })
 ], AppModule);

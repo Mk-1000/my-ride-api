@@ -9,35 +9,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Rider = void 0;
+exports.Car = void 0;
 const typeorm_1 = require("typeorm");
-const car_entity_1 = require("./car.entity");
-const user_entity_1 = require("./user.entity");
-let Rider = class Rider {
+const rider_entity_1 = require("./rider.entity");
+let Car = class Car {
 };
-exports.Rider = Rider;
+exports.Car = Car;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Rider.prototype, "id", void 0);
+], Car.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Rider.prototype, "licenseNumber", void 0);
+], Car.prototype, "make", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Car.prototype, "model", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Car.prototype, "year", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], Rider.prototype, "licenseImageUrl", void 0);
+], Car.prototype, "color", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => user_entity_1.User, (user) => user.rider, { nullable: false, onDelete: 'CASCADE' }),
-    (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", user_entity_1.User)
-], Rider.prototype, "user", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => car_entity_1.Car, (car) => car.rider),
-    __metadata("design:type", Array)
-], Rider.prototype, "cars", void 0);
-exports.Rider = Rider = __decorate([
+    (0, typeorm_1.ManyToOne)(() => rider_entity_1.Rider, (rider) => rider.cars, { onDelete: 'CASCADE' }),
+    __metadata("design:type", rider_entity_1.Rider)
+], Car.prototype, "rider", void 0);
+exports.Car = Car = __decorate([
     (0, typeorm_1.Entity)()
-], Rider);
-//# sourceMappingURL=rider.entity.js.map
+], Car);
+//# sourceMappingURL=car.entity.js.map

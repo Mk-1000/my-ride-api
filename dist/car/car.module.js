@@ -6,25 +6,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RiderModule = void 0;
+exports.CarModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const rider_entity_1 = require("../entities/rider.entity");
-const user_module_1 = require("../user/user.module");
-const rider_controller_1 = require("./rider.controller");
-const rider_service_1 = require("./rider.service");
-let RiderModule = class RiderModule {
+const car_entity_1 = require("../entities/car.entity");
+const rider_module_1 = require("../rider/rider.module");
+const car_controller_1 = require("./car.controller");
+const car_service_1 = require("./car.service");
+let CarModule = class CarModule {
 };
-exports.RiderModule = RiderModule;
-exports.RiderModule = RiderModule = __decorate([
+exports.CarModule = CarModule;
+exports.CarModule = CarModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([rider_entity_1.Rider]),
-            user_module_1.UserModule,
+            typeorm_1.TypeOrmModule.forFeature([car_entity_1.Car]),
+            rider_module_1.RiderModule,
         ],
-        controllers: [rider_controller_1.RiderController],
-        providers: [rider_service_1.RiderService],
-        exports: [rider_service_1.RiderService],
+        controllers: [car_controller_1.CarController],
+        providers: [car_service_1.CarService],
     })
-], RiderModule);
-//# sourceMappingURL=rider.module.js.map
+], CarModule);
+//# sourceMappingURL=car.module.js.map

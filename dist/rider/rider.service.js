@@ -37,6 +37,16 @@ let RiderService = class RiderService {
     async findAll() {
         return this.riderRepository.find({ relations: ['user'] });
     }
+    async findOne(id) {
+        const rider = await this.riderRepository.findOne({
+            where: { id },
+            relations: ['user'],
+        });
+        if (!rider) {
+            throw new common_1.NotFoundException(`Rider with ID ${id} not found`);
+        }
+        return rider;
+    }
 };
 exports.RiderService = RiderService;
 exports.RiderService = RiderService = __decorate([

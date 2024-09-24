@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Rider } from '../entities/rider.entity';
@@ -14,7 +14,7 @@ export class RiderService {
   ) {}
 
   async create(createRiderDto: CreateRiderDto): Promise<Rider> {
-    // Create the user with userType 'RIDER'
+
     const user = await this.userService.create({
       ...createRiderDto.user,
       userType: 'RIDER' // Set userType to 'RIDER'
@@ -31,5 +31,18 @@ export class RiderService {
 
   async findAll(): Promise<Rider[]> {
     return this.riderRepository.find({ relations: ['user'] });
+  }
+
+  async findOne(id: number): Promise<Rider> {
+    const rider = await this.riderRepository.findOne({
+      where: { id },
+      relations: ['user'],
+    });
+
+    if (!rider) {
+      throw new NotFoundException(`Rider with ID ${id} not found`);
+    }
+
+    return rider;
   }
 }
