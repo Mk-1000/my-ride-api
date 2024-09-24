@@ -52,7 +52,7 @@ class Car #LightSeaGreen{
   +owner: Rider
 }
 
-class Ride {
+class Ride #LightSeaGreen {
   +id: Long
   +startLocation: Location
   +endLocation: Location
@@ -129,8 +129,8 @@ User "1" -- "1" Address: has
 User <|-- Rider #LightSeaGreen
 User <|-- Customer #LightSeaGreen
 Rider "1" -- "0..*" Car #LightSeaGreen : owns
-Rider "1" -- "0..*" Ride: creates 
-Ride "1" -- "1" Car: uses
+Rider "1" -- "0..*" Ride #LightSeaGreen : creates 
+Ride "0..*" -- "1" Car #LightSeaGreen : uses
 Ride "1" -- "0..*" Booking: hasBookings
 Customer "0..*" -- "0..*" Booking: books
 Ride "1" -- "0..*" Rating: receives
