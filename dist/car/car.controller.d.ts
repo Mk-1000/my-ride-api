@@ -4,6 +4,6 @@ import { CreateCarDto } from './dto/create-car.dto';
 export declare class CarController {
     private readonly carService;
     constructor(carService: CarService);
-    create(riderId: number, createCarDto: CreateCarDto): Promise<Car>;
+    create(createCarDto: CreateCarDto): Promise<Car>;
     findAll(): Promise<Car[]>;
 }

@@ -23,13 +23,23 @@ let CarService = class CarService {
         this.carRepository = carRepository;
         this.riderService = riderService;
     }
-    async create(riderId, createCarDto) {
-        const rider = await this.riderService.findOne(riderId);
+    async create(createCarDto) {
+        const rider = await this.riderService.findOne(createCarDto.riderId);
         const car = this.carRepository.create({ ...createCarDto, rider });
         return this.carRepository.save(car);
     }
     async findAll() {
         return this.carRepository.find({ relations: ['rider'] });
+    }
+    async findOne(id) {
+        const car = await this.carRepository.findOne({
+            where: { id },
+            relations: ['rider'],
+        });
+        if (!car) {
+            throw new common_1.NotFoundException(`Car with ID ${id} not found`);
+        }
+        return car;
     }
 };
 exports.CarService = CarService;

@@ -12,41 +12,41 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CarController = void 0;
+exports.RideController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
-const car_service_1 = require("./car.service");
-const create_car_dto_1 = require("./dto/create-car.dto");
-let CarController = class CarController {
-    constructor(carService) {
-        this.carService = carService;
+const create_ride_dto_1 = require("./dto/create-ride.dto");
+const ride_service_1 = require("./ride.service");
+let RideController = class RideController {
+    constructor(rideService) {
+        this.rideService = rideService;
     }
-    async create(createCarDto) {
-        return this.carService.create(createCarDto);
+    async create(createRideDto) {
+        return this.rideService.create(createRideDto);
     }
     async findAll() {
-        return this.carService.findAll();
+        return this.rideService.findAll();
     }
 };
-exports.CarController = CarController;
+exports.RideController = RideController;
 __decorate([
     (0, common_1.Post)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Create a new car for a rider' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new ride' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_car_dto_1.CreateCarDto]),
+    __metadata("design:paramtypes", [create_ride_dto_1.CreateRideDto]),
     __metadata("design:returntype", Promise)
-], CarController.prototype, "create", null);
+], RideController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Get all cars' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all rides' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], CarController.prototype, "findAll", null);
-exports.CarController = CarController = __decorate([
-    (0, swagger_1.ApiTags)('cars'),
-    (0, common_1.Controller)('cars'),
-    __metadata("design:paramtypes", [car_service_1.CarService])
-], CarController);
-//# sourceMappingURL=car.controller.js.map
+], RideController.prototype, "findAll", null);
+exports.RideController = RideController = __decorate([
+    (0, swagger_1.ApiTags)('rides'),
+    (0, common_1.Controller)('rides'),
+    __metadata("design:paramtypes", [ride_service_1.RideService])
+], RideController);
+//# sourceMappingURL=ride.controller.js.map

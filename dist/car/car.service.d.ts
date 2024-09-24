@@ -6,6 +6,7 @@ export declare class CarService {
     private carRepository;
     private riderService;
     constructor(carRepository: Repository<Car>, riderService: RiderService);
-    create(riderId: number, createCarDto: CreateCarDto): Promise<Car>;
+    create(createCarDto: CreateCarDto): Promise<Car>;
     findAll(): Promise<Car[]>;
+    findOne(id: number): Promise<Car>;
 }

@@ -1,5 +1,5 @@
 @startuml
-class User #LightGreen {
+class User #LightSeaGreen {
   +id: Long
   +name: String
   +email: String
@@ -24,7 +24,7 @@ class Location {
   +fullAddress: String
 }
 
-class Rider #LightGreen {
+class Rider #LightSeaGreen {
   +licenseCard: Verification
 }
 
@@ -38,11 +38,11 @@ class Verification {
   +verifiedBy: String
 }
 
-class Customer #LightGreen{
+class Customer #LightSeaGreen{
     +cinCard: Verification
 }
 
-class Car #LightGreen{
+class Car #LightSeaGreen{
   +id: Long
   +licensePlate: String
   +make: String
@@ -126,9 +126,9 @@ Customer "1" -- "1" Verification: hasCin
 Rider "1" -- "1" Verification: hasLicence
 User "1" -- "1" Address: has
 
-User <|-- Rider #LightGreen
-User <|-- Customer #LightGreen
-Rider "1" -- "0..*" Car #LightGreen : owns
+User <|-- Rider #LightSeaGreen
+User <|-- Customer #LightSeaGreen
+Rider "1" -- "0..*" Car #LightSeaGreen : owns
 Rider "1" -- "0..*" Ride: creates 
 Ride "1" -- "1" Car: uses
 Ride "1" -- "0..*" Booking: hasBookings

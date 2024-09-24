@@ -15,4 +15,7 @@ export class CreateCarDto {
 
   @ApiProperty({ example: 'ABC-1234', description: 'License plate', required: false })
   licensePlate?: string;
+
+  @ApiProperty({ example: 1, description: 'Rider ID' })
+  riderId: number; 
 }

@@ -34,4 +34,8 @@ __decorate([
     (0, swagger_1.ApiProperty)({ example: 'ABC-1234', description: 'License plate', required: false }),
     __metadata("design:type", String)
 ], CreateCarDto.prototype, "licensePlate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 1, description: 'Rider ID' }),
+    __metadata("design:type", Number)
+], CreateCarDto.prototype, "riderId", void 0);
 //# sourceMappingURL=create-car.dto.js.map

@@ -7,10 +7,11 @@ import { CarService } from './car.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Car]),
+    TypeOrmModule.forFeature([Car]), // Register the Car entity for TypeORM
     RiderModule, // Import RiderModule to access rider-related services
   ],
-  controllers: [CarController],
-  providers: [CarService],
+  controllers: [CarController], // Register the CarController
+  providers: [CarService], // Register the CarService
+  exports: [CarService], // Export CarService for use in other modules
 })
 export class CarModule {}

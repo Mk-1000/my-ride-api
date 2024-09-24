@@ -24,6 +24,7 @@ exports.CarModule = CarModule = __decorate([
         ],
         controllers: [car_controller_1.CarController],
         providers: [car_service_1.CarService],
+        exports: [car_service_1.CarService],
     })
 ], CarModule);
 //# sourceMappingURL=car.module.js.map

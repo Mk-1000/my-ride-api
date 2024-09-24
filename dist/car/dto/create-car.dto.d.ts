@@ -4,4 +4,5 @@ export declare class CreateCarDto {
     year: number;
     color?: string;
     licensePlate?: string;
+    riderId: number;
 }

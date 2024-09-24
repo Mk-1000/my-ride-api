@@ -14,6 +14,7 @@ const car_module_1 = require("./car/car.module");
 const customer_module_1 = require("./customer/customer.module");
 const rider_module_1 = require("./rider/rider.module");
 const user_module_1 = require("./user/user.module");
+const ride_module_1 = require("./ride/ride.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -37,6 +38,7 @@ exports.AppModule = AppModule = __decorate([
             rider_module_1.RiderModule,
             customer_module_1.CustomerModule,
             car_module_1.CarModule,
+            ride_module_1.RideModule,
         ],
     })
 ], AppModule);
