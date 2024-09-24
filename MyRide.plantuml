@@ -1,0 +1,143 @@
+@startuml
+class User #LightGreen {
+  +id: Long
+  +name: String
+  +email: String
+  +encryptedPassword: String
+  +phoneNumber: String
+  +profilePictureUrl: String
+  +userType: UserType
+  +address: Address
+}
+
+class Address {
+  +street: String
+  +city: String
+  +state: String
+  +zipCode: String
+  +country: String
+}
+
+class Location {
+  +latitude: Double
+  +longitude: Double
+  +fullAddress: String
+}
+
+class Rider #LightGreen {
+  +licenseCard: Verification
+}
+
+class Verification {
+  +id: Long
+  +documentNumber: String
+  +documentImageUrl: String
+  +selfieWithDocumentUrl: String
+  +verificationStatus: VerificationStatus
+  +verificationDate: Date
+  +verifiedBy: String
+}
+
+class Customer #LightGreen{
+    +cinCard: Verification
+}
+
+class Car #LightGreen{
+  +id: Long
+  +licensePlate: String
+  +make: String
+  +model: String
+  +year: Int
+  +capacity: Int
+  +owner: Rider
+}
+
+class Ride {
+  +id: Long
+  +startLocation: Location
+  +endLocation: Location
+  +rideDate: Date
+  +rideTime: Time
+  +availableSeats: Int
+  +pricePerSeat: Float
+  +driver: Rider
+  +car: Car
+}
+
+class Booking {
+  +id: Long
+  +ride: Ride
+  +passenger: Customer
+  +seatCount: Int
+  +totalPrice: Float
+  +status: BookingStatus
+}
+
+class Rating {
+  +id: Long
+  +ride: Ride
+  +rater: User
+  +ratee: User
+  +score: Int
+  +comment: String
+  +ratingDate: Date
+}
+
+class Message {
+  +id: Long
+  +sender: User
+  +receiver: User
+  +content: String
+  +timestamp: Date
+  +status: MessageStatus
+}
+
+enum UserType {
+  RIDER
+  CUSTOMER
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum MessageStatus {
+  SENT
+  READ
+}
+
+' Waiting for verification (initial state)
+' Good detection by AI (automated status)
+' Final approval by support team
+' Rejected by support team or failed AI verification
+
+enum VerificationStatus {
+  EN_ATTENTE
+  VERIFIED
+  APPROUVE
+  REJECTED
+}
+
+' Relationships
+Customer "1" -- "1" Verification: hasCin
+Rider "1" -- "1" Verification: hasLicence
+User "1" -- "1" Address: has
+
+User <|-- Rider #LightGreen
+User <|-- Customer #LightGreen
+Rider "1" -- "0..*" Car #LightGreen : owns
+Rider "1" -- "0..*" Ride: creates 
+Ride "1" -- "1" Car: uses
+Ride "1" -- "0..*" Booking: hasBookings
+Customer "0..*" -- "0..*" Booking: books
+Ride "1" -- "0..*" Rating: receives
+User "1" -- "0..*" Rating: givesRating
+User "1" -- "0..*" Rating: receivesRating
+User "1" -- "0..*" Message: sends
+User "1" -- "0..*" Message: receives
+Ride "1" -- "1" Location: startLocation
+Ride "1" -- "1" Location: endLocation
+@enduml
