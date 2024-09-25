@@ -18,7 +18,7 @@ class Address {
   +country: String
 }
 
-class Location {
+class Location #LightSeaGreen {
   +latitude: Double
   +longitude: Double
   +fullAddress: String
@@ -138,6 +138,6 @@ User "1" -- "0..*" Rating: givesRating
 User "1" -- "0..*" Rating: receivesRating
 User "1" -- "0..*" Message: sends
 User "1" -- "0..*" Message: receives
-Ride "1" -- "1" Location: startLocation
-Ride "1" -- "1" Location: endLocation
+Ride "1" -- "1" Location #LightSeaGreen : startLocation
+Ride "1" -- "1" Location #LightSeaGreen : endLocation
 @enduml
