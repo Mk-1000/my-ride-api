@@ -11,22 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCustomerDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const create_user_dto_1 = require("../../user/dto/create-user.dto");
 class CreateCustomerDto {
 }
 exports.CreateCustomerDto = CreateCustomerDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({
-        description: 'User information',
-        example: {
-            name: "Mokni Hamdi",
-            email: "hamdi@gmail.com",
-            password: "password123",
-            phoneNumber: "50430778",
-            profilePictureUrl: "https://www.facebook.com/photo/?fbid=128057343018499&set=a.117363367421230",
-            userType: "CUSTOMER"
-        }
-    }),
-    __metadata("design:type", Object)
+    (0, swagger_1.ApiProperty)({ description: 'User information' }),
+    __metadata("design:type", create_user_dto_1.CreateUserDto)
 ], CreateCustomerDto.prototype, "user", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: '123 Main St', description: 'The address of the customer', required: false }),

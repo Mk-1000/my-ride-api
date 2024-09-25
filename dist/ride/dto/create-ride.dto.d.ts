@@ -1,6 +1,7 @@
+import { CreateLocationDto } from 'src/location/dto/create-location.dto';
 export declare class CreateRideDto {
-    startLocation: string;
-    endLocation: string;
+    startLocation: CreateLocationDto;
+    endLocation: CreateLocationDto;
     rideDate: Date;
     rideTime: string;
     availableSeats: number;

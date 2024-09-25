@@ -9,22 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateRiderDto = void 0;
+exports.UpdateLocationDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-const create_user_dto_1 = require("../../user/dto/create-user.dto");
-class CreateRiderDto {
+class UpdateLocationDto {
 }
-exports.CreateRiderDto = CreateRiderDto;
+exports.UpdateLocationDto = UpdateLocationDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'User information' }),
-    __metadata("design:type", create_user_dto_1.CreateUserDto)
-], CreateRiderDto.prototype, "user", void 0);
+    (0, swagger_1.ApiProperty)({ example: 40.712776, description: 'Latitude of the location', required: false }),
+    __metadata("design:type", Number)
+], UpdateLocationDto.prototype, "latitude", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'ABC123', description: 'The rider license number' }),
+    (0, swagger_1.ApiProperty)({ example: -74.005974, description: 'Longitude of the location', required: false }),
+    __metadata("design:type", Number)
+], UpdateLocationDto.prototype, "longitude", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'New York, NY, USA', description: 'Full address of the location', required: false }),
     __metadata("design:type", String)
-], CreateRiderDto.prototype, "licenseNumber", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: 'http://example.com/license.jpg', description: 'License image URL', required: false }),
-    __metadata("design:type", String)
-], CreateRiderDto.prototype, "licenseImageUrl", void 0);
-//# sourceMappingURL=create-rider.dto.js.map
+], UpdateLocationDto.prototype, "fullAddress", void 0);
+//# sourceMappingURL=update-location.dto.js.map

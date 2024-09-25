@@ -6,6 +6,7 @@ import { CustomerModule } from './customer/customer.module';
 import { RiderModule } from './rider/rider.module';
 import { UserModule } from './user/user.module';
 import { RideModule } from './ride/ride.module';
+import { LocationModule } from './location/location.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { RideModule } from './ride/ride.module';
     CustomerModule,
     CarModule,
     RideModule,
+    LocationModule,
   ],
 })
 export class AppModule {}

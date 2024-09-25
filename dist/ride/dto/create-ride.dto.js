@@ -11,16 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateRideDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const create_location_dto_1 = require("../../location/dto/create-location.dto");
 class CreateRideDto {
 }
 exports.CreateRideDto = CreateRideDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'New York', description: 'Start location of the ride' }),
-    __metadata("design:type", String)
+    (0, swagger_1.ApiProperty)({ description: 'Start location of the ride' }),
+    __metadata("design:type", create_location_dto_1.CreateLocationDto)
 ], CreateRideDto.prototype, "startLocation", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'Los Angeles', description: 'End location of the ride' }),
-    __metadata("design:type", String)
+    (0, swagger_1.ApiProperty)({ description: 'End location of the ride' }),
+    __metadata("design:type", create_location_dto_1.CreateLocationDto)
 ], CreateRideDto.prototype, "endLocation", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: '2024-10-01', description: 'Date of the ride in YYYY-MM-DD format' }),

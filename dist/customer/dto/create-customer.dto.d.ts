@@ -1,12 +1,6 @@
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
 export declare class CreateCustomerDto {
-    user: {
-        name: string;
-        email: string;
-        password: string;
-        phoneNumber?: string;
-        profilePictureUrl?: string;
-        userType: string;
-    };
+    user: CreateUserDto;
     address?: string;
     loyaltyPoints?: number;
 }

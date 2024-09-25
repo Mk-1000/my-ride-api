@@ -1,11 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { CreateLocationDto } from 'src/location/dto/create-location.dto';
 
 export class CreateRideDto {
-  @ApiProperty({ example: 'New York', description: 'Start location of the ride' })
-  startLocation: string;
+  @ApiProperty({ description: 'Start location of the ride' })
+  startLocation: CreateLocationDto;
 
-  @ApiProperty({ example: 'Los Angeles', description: 'End location of the ride' })
-  endLocation: string;
+  @ApiProperty({ description: 'End location of the ride' })
+  endLocation: CreateLocationDto;
 
   @ApiProperty({ example: '2024-10-01', description: 'Date of the ride in YYYY-MM-DD format' })
   rideDate: Date;

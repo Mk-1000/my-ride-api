@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RideModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const location_module_1 = require("../location/location.module");
 const car_service_1 = require("../car/car.service");
 const car_entity_1 = require("../entities/car.entity");
 const ride_entity_1 = require("../entities/ride.entity");
@@ -24,7 +25,7 @@ exports.RideModule = RideModule = __decorate([
     (0, common_1.Module)({
         imports: [
             typeorm_1.TypeOrmModule.forFeature([ride_entity_1.Ride, rider_entity_1.Rider, car_entity_1.Car]),
-            user_module_1.UserModule,
+            user_module_1.UserModule, location_module_1.LocationModule
         ],
         providers: [ride_service_1.RideService, rider_service_1.RiderService, car_service_1.CarService],
         controllers: [ride_controller_1.RideController],

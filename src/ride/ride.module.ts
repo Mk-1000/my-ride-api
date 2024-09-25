@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { LocationModule } from 'src/location/location.module';
 import { CarService } from '../car/car.service';
 import { Car } from '../entities/car.entity';
 import { Ride } from '../entities/ride.entity';
@@ -12,7 +13,7 @@ import { RideService } from './ride.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Ride, Rider, Car]),  // Register Ride, Rider, and Car repositories
-    UserModule, // Include UserModule to make UserService available
+    UserModule, LocationModule// Include UserModule to make UserService available
   ],
   providers: [RideService, RiderService, CarService],
   controllers: [RideController],

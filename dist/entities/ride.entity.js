@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ride = void 0;
 const typeorm_1 = require("typeorm");
 const car_entity_1 = require("./car.entity");
+const location_entity_1 = require("./location.entity");
 const rider_entity_1 = require("./rider.entity");
 let Ride = class Ride {
 };
@@ -21,12 +22,14 @@ __decorate([
     __metadata("design:type", Number)
 ], Ride.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 255 }),
-    __metadata("design:type", String)
+    (0, typeorm_1.ManyToOne)(() => location_entity_1.Location, { cascade: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'start_location_id' }),
+    __metadata("design:type", location_entity_1.Location)
 ], Ride.prototype, "startLocation", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 255 }),
-    __metadata("design:type", String)
+    (0, typeorm_1.ManyToOne)(() => location_entity_1.Location, { cascade: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'end_location_id' }),
+    __metadata("design:type", location_entity_1.Location)
 ], Ride.prototype, "endLocation", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'date' }),

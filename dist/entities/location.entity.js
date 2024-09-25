@@ -9,22 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateRiderDto = void 0;
-const swagger_1 = require("@nestjs/swagger");
-const create_user_dto_1 = require("../../user/dto/create-user.dto");
-class CreateRiderDto {
-}
-exports.CreateRiderDto = CreateRiderDto;
+exports.Location = void 0;
+const typeorm_1 = require("typeorm");
+let Location = class Location {
+};
+exports.Location = Location;
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'User information' }),
-    __metadata("design:type", create_user_dto_1.CreateUserDto)
-], CreateRiderDto.prototype, "user", void 0);
+    (0, typeorm_1.PrimaryGeneratedColumn)('increment'),
+    __metadata("design:type", Number)
+], Location.prototype, "id", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'ABC123', description: 'The rider license number' }),
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], Location.prototype, "latitude", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'double precision' }),
+    __metadata("design:type", Number)
+], Location.prototype, "longitude", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'varchar', length: 255 }),
     __metadata("design:type", String)
-], CreateRiderDto.prototype, "licenseNumber", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: 'http://example.com/license.jpg', description: 'License image URL', required: false }),
-    __metadata("design:type", String)
-], CreateRiderDto.prototype, "licenseImageUrl", void 0);
-//# sourceMappingURL=create-rider.dto.js.map
+], Location.prototype, "fullAddress", void 0);
+exports.Location = Location = __decorate([
+    (0, typeorm_1.Entity)()
+], Location);
+//# sourceMappingURL=location.entity.js.map
