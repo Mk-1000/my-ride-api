@@ -10,10 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
+const bcrypt = require("bcrypt");
 const typeorm_1 = require("typeorm");
-const customer_entity_1 = require("./customer.entity");
-const rider_entity_1 = require("./rider.entity");
 let User = class User {
+    async hashPassword() {
+        this.encryptedPassword = await bcrypt.hash(this.encryptedPassword, 10);
+    }
 };
 exports.User = User;
 __decorate([
@@ -33,6 +35,12 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "encryptedPassword", void 0);
 __decorate([
+    (0, typeorm_1.BeforeInsert)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], User.prototype, "hashPassword", null);
+__decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "phoneNumber", void 0);
@@ -44,15 +52,8 @@ __decorate([
     (0, typeorm_1.Column)({ default: 'CUSTOMER' }),
     __metadata("design:type", String)
 ], User.prototype, "userType", void 0);
-__decorate([
-    (0, typeorm_1.OneToOne)(() => rider_entity_1.Rider, (rider) => rider.user, { nullable: true, onDelete: 'CASCADE' }),
-    __metadata("design:type", rider_entity_1.Rider)
-], User.prototype, "rider", void 0);
-__decorate([
-    (0, typeorm_1.OneToOne)(() => customer_entity_1.Customer, (customer) => customer.user, { nullable: true, onDelete: 'CASCADE' }),
-    __metadata("design:type", customer_entity_1.Customer)
-], User.prototype, "customer", void 0);
 exports.User = User = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)(),
+    (0, typeorm_1.TableInheritance)({ column: { type: 'varchar', name: 'userType' } })
 ], User);
 //# sourceMappingURL=user.entity.js.map

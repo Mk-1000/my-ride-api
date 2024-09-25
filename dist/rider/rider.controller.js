@@ -22,7 +22,7 @@ let RiderController = class RiderController {
         this.riderService = riderService;
     }
     async create(createRiderDto) {
-        return this.riderService.create(createRiderDto);
+        return this.riderService.createRider(createRiderDto);
     }
     async findAll() {
         return this.riderService.findAll();

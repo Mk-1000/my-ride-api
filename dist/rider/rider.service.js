@@ -15,33 +15,35 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RiderService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const bcrypt = require("bcrypt");
 const typeorm_2 = require("typeorm");
 const rider_entity_1 = require("../entities/rider.entity");
-const user_service_1 = require("../user/user.service");
 let RiderService = class RiderService {
-    constructor(riderRepository, userService) {
+    constructor(riderRepository) {
         this.riderRepository = riderRepository;
-        this.userService = userService;
     }
-    async create(createRiderDto) {
-        const user = await this.userService.create({
-            ...createRiderDto.user,
-            userType: 'RIDER'
-        });
-        const rider = this.riderRepository.create({
-            ...createRiderDto,
-            user,
-        });
-        return this.riderRepository.save(rider);
+    async createRider(createRiderDto) {
+        try {
+            const hashedPassword = await bcrypt.hash(createRiderDto.user.password, 10);
+            const newRider = this.riderRepository.create({
+                ...createRiderDto.user,
+                encryptedPassword: hashedPassword,
+                userType: 'RIDER',
+                licenseNumber: createRiderDto.licenseNumber,
+                licenseImageUrl: createRiderDto.licenseImageUrl,
+            });
+            return await this.riderRepository.save(newRider);
+        }
+        catch (error) {
+            console.error('Error creating rider:', error);
+            throw new common_1.InternalServerErrorException('Failed to create rider');
+        }
     }
     async findAll() {
-        return this.riderRepository.find({ relations: ['user'] });
+        return this.riderRepository.find();
     }
     async findOne(id) {
-        const rider = await this.riderRepository.findOne({
-            where: { id },
-            relations: ['user'],
-        });
+        const rider = await this.riderRepository.findOne({ where: { id } });
         if (!rider) {
             throw new common_1.NotFoundException(`Rider with ID ${id} not found`);
         }
@@ -52,7 +54,6 @@ exports.RiderService = RiderService;
 exports.RiderService = RiderService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(rider_entity_1.Rider)),
-    __metadata("design:paramtypes", [typeorm_2.Repository,
-        user_service_1.UserService])
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], RiderService);
 //# sourceMappingURL=rider.service.js.map

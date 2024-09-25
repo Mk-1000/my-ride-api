@@ -9,8 +9,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CarModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const car_entity_1 = require("../entities/car.entity");
 const rider_module_1 = require("../rider/rider.module");
+const user_module_1 = require("../user/user.module");
+const car_entity_1 = require("../entities/car.entity");
 const car_controller_1 = require("./car.controller");
 const car_service_1 = require("./car.service");
 let CarModule = class CarModule {
@@ -20,7 +21,7 @@ exports.CarModule = CarModule = __decorate([
     (0, common_1.Module)({
         imports: [
             typeorm_1.TypeOrmModule.forFeature([car_entity_1.Car]),
-            rider_module_1.RiderModule,
+            user_module_1.UserModule, rider_module_1.RiderModule
         ],
         controllers: [car_controller_1.CarController],
         providers: [car_service_1.CarService],

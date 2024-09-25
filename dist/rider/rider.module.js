@@ -20,7 +20,7 @@ exports.RiderModule = RiderModule = __decorate([
     (0, common_1.Module)({
         imports: [
             typeorm_1.TypeOrmModule.forFeature([rider_entity_1.Rider]),
-            user_module_1.UserModule,
+            (0, common_1.forwardRef)(() => user_module_1.UserModule),
         ],
         controllers: [rider_controller_1.RiderController],
         providers: [rider_service_1.RiderService],

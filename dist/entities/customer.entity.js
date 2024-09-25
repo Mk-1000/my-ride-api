@@ -12,18 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Customer = void 0;
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("./user.entity");
-let Customer = class Customer {
+let Customer = class Customer extends user_entity_1.User {
 };
 exports.Customer = Customer;
-__decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
-], Customer.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.OneToOne)(() => user_entity_1.User, (user) => user.customer, { nullable: false, onDelete: 'CASCADE' }),
-    (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", user_entity_1.User)
-], Customer.prototype, "user", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
@@ -33,6 +24,6 @@ __decorate([
     __metadata("design:type", Number)
 ], Customer.prototype, "loyaltyPoints", void 0);
 exports.Customer = Customer = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.ChildEntity)()
 ], Customer);
 //# sourceMappingURL=customer.entity.js.map

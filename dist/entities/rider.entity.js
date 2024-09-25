@@ -13,13 +13,9 @@ exports.Rider = void 0;
 const typeorm_1 = require("typeorm");
 const car_entity_1 = require("./car.entity");
 const user_entity_1 = require("./user.entity");
-let Rider = class Rider {
+let Rider = class Rider extends user_entity_1.User {
 };
 exports.Rider = Rider;
-__decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
-], Rider.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
@@ -29,15 +25,10 @@ __decorate([
     __metadata("design:type", String)
 ], Rider.prototype, "licenseImageUrl", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => user_entity_1.User, (user) => user.rider, { nullable: false, onDelete: 'CASCADE' }),
-    (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", user_entity_1.User)
-], Rider.prototype, "user", void 0);
-__decorate([
     (0, typeorm_1.OneToMany)(() => car_entity_1.Car, (car) => car.rider),
     __metadata("design:type", Array)
 ], Rider.prototype, "cars", void 0);
 exports.Rider = Rider = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.ChildEntity)()
 ], Rider);
 //# sourceMappingURL=rider.entity.js.map

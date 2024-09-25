@@ -12,7 +12,7 @@ export class RiderController {
   @Post()
   @ApiOperation({ summary: 'Create a new rider' })
   async create(@Body() createRiderDto: CreateRiderDto): Promise<Rider> {
-    return this.riderService.create(createRiderDto);
+    return this.riderService.createRider(createRiderDto);
   }
 
   @Get()

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Rider } from '../entities/rider.entity';
 import { UserModule } from '../user/user.module'; // Import UserModule
@@ -7,11 +7,11 @@ import { RiderService } from './rider.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Rider]),
-    UserModule, // Ensure UserModule is imported
+    TypeOrmModule.forFeature([Rider]), // Register Rider entity
+    forwardRef(() => UserModule), // Avoid circular dependency
   ],
   controllers: [RiderController],
   providers: [RiderService],
-  exports: [RiderService], // Export RiderService to be available in other modules
+  exports: [RiderService], // Export RiderService
 })
 export class RiderModule {}

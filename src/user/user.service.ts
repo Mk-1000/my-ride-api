@@ -39,14 +39,15 @@ export class UserService {
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
-
+  
     const isMatch = await bcrypt.compare(loginUserDto.password, user.encryptedPassword);
     if (!isMatch) {
       throw new UnauthorizedException('Invalid credentials');
     }
-
-    return user;
+  
+    return user; // Return user or some token if needed
   }
+  
 
   async remove(id: number): Promise<void> {
     await this.userRepository.delete(id);

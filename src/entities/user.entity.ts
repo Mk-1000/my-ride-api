@@ -1,8 +1,8 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Customer } from './customer.entity';
-import { Rider } from './rider.entity';
+import * as bcrypt from 'bcrypt';
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn, TableInheritance } from 'typeorm';
 
 @Entity()
+@TableInheritance({ column: { type: 'varchar', name: 'userType' } })
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,18 +16,17 @@ export class User {
   @Column()
   encryptedPassword: string;
 
+  @BeforeInsert()
+  async hashPassword() {
+    this.encryptedPassword = await bcrypt.hash(this.encryptedPassword, 10);
+  }
+
   @Column({ nullable: true })
   phoneNumber: string;
 
   @Column({ nullable: true })
   profilePictureUrl: string;
 
-  @Column({ default: 'CUSTOMER' }) // Add userType column
-  userType: string; 
-
-  @OneToOne(() => Rider, (rider) => rider.user, { nullable: true, onDelete: 'CASCADE' })
-  rider: Rider;
-
-  @OneToOne(() => Customer, (customer) => customer.user, { nullable: true, onDelete: 'CASCADE' })
-  customer: Customer;
+  @Column({ default: 'CUSTOMER' })
+  userType: string;
 }

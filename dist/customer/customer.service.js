@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomerService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const bcrypt = require("bcrypt");
 const typeorm_2 = require("typeorm");
 const customer_entity_1 = require("../entities/customer.entity");
 const user_service_1 = require("../user/user.service");
@@ -23,19 +24,25 @@ let CustomerService = class CustomerService {
         this.customerRepository = customerRepository;
         this.userService = userService;
     }
-    async create(createCustomerDto) {
-        const user = await this.userService.create({
-            ...createCustomerDto.user,
-            userType: 'CUSTOMER'
-        });
-        const customer = this.customerRepository.create({
-            ...createCustomerDto,
-            user,
-        });
-        return this.customerRepository.save(customer);
+    async createCustomer(createCustomerDto) {
+        try {
+            const hashedPassword = await bcrypt.hash(createCustomerDto.user.password, 10);
+            const newCustomer = this.customerRepository.create({
+                ...createCustomerDto.user,
+                encryptedPassword: hashedPassword,
+                address: createCustomerDto.address,
+                loyaltyPoints: createCustomerDto.loyaltyPoints,
+                userType: 'CUSTOMER',
+            });
+            return await this.customerRepository.save(newCustomer);
+        }
+        catch (error) {
+            console.error('Error creating customer:', error);
+            throw new common_1.InternalServerErrorException('Failed to create customer');
+        }
     }
     async findAll() {
-        return this.customerRepository.find({ relations: ['user'] });
+        return this.customerRepository.find();
     }
 };
 exports.CustomerService = CustomerService;

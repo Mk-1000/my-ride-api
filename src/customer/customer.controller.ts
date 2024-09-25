@@ -12,7 +12,7 @@ export class CustomerController {
   @Post()
   @ApiOperation({ summary: 'Create a new customer' })
   async create(@Body() createCustomerDto: CreateCustomerDto): Promise<Customer> {
-    return this.customerService.create(createCustomerDto);
+    return this.customerService.createCustomer(createCustomerDto);
   }
 
   @Get()

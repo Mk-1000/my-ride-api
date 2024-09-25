@@ -1,15 +1,8 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { ChildEntity, Column } from 'typeorm';
 import { User } from './user.entity';
 
-@Entity()
-export class Customer {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @OneToOne(() => User, (user) => user.customer, { nullable: false, onDelete: 'CASCADE' })
-  @JoinColumn()  // This decorator creates a foreign key column in the Customer table
-  user: User;
-
+@ChildEntity()
+export class Customer extends User {
   @Column({ nullable: true })
   address: string;
 

@@ -22,7 +22,7 @@ let CustomerController = class CustomerController {
         this.customerService = customerService;
     }
     async create(createCustomerDto) {
-        return this.customerService.create(createCustomerDto);
+        return this.customerService.createCustomer(createCustomerDto);
     }
     async findAll() {
         return this.customerService.findAll();

@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { Customer } from '../entities/customer.entity';
 import { UserService } from '../user/user.service';
@@ -10,22 +11,32 @@ export class CustomerService {
   constructor(
     @InjectRepository(Customer)
     private customerRepository: Repository<Customer>,
-    private userService: UserService,
+    private userService: UserService, // Inject UserService for any common user logic
   ) {}
 
-  async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
-    const user = await this.userService.create({
-      ...createCustomerDto.user,
-      userType: 'CUSTOMER' // Set userType to 'CUSTOMER' 
-    }); // Create the user
-    const customer = this.customerRepository.create({
-      ...createCustomerDto,
-      user,
-    });
-    return this.customerRepository.save(customer);
+  // Create a new customer
+  async createCustomer(createCustomerDto: CreateCustomerDto): Promise<Customer> {
+    try {
+      const hashedPassword = await bcrypt.hash(createCustomerDto.user.password, 10);
+  
+      const newCustomer = this.customerRepository.create({
+        ...createCustomerDto.user,
+        encryptedPassword: hashedPassword,
+        address: createCustomerDto.address,
+        loyaltyPoints: createCustomerDto.loyaltyPoints,
+        userType: 'CUSTOMER',
+      });
+  
+      return await this.customerRepository.save(newCustomer);
+    } catch (error) {
+      console.error('Error creating customer:', error);
+      throw new InternalServerErrorException('Failed to create customer');
+    }
   }
+  
 
+  // Retrieve all customers
   async findAll(): Promise<Customer[]> {
-    return this.customerRepository.find({ relations: ['user'] });
+    return this.customerRepository.find(); // No need for 'user' relation as Customer extends User
   }
 }
