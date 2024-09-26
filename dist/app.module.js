@@ -16,6 +16,9 @@ const rider_module_1 = require("./rider/rider.module");
 const user_module_1 = require("./user/user.module");
 const ride_module_1 = require("./ride/ride.module");
 const location_module_1 = require("./location/location.module");
+const address_service_1 = require("./address/address.service");
+const address_controller_1 = require("./address/address.controller");
+const address_module_1 = require("./address/address.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -41,7 +44,10 @@ exports.AppModule = AppModule = __decorate([
             car_module_1.CarModule,
             ride_module_1.RideModule,
             location_module_1.LocationModule,
+            address_module_1.AddressModule,
         ],
+        providers: [address_service_1.AddressService],
+        controllers: [address_controller_1.AddressController],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

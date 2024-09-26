@@ -7,6 +7,9 @@ import { RiderModule } from './rider/rider.module';
 import { UserModule } from './user/user.module';
 import { RideModule } from './ride/ride.module';
 import { LocationModule } from './location/location.module';
+import { AddressService } from './address/address.service';
+import { AddressController } from './address/address.controller';
+import { AddressModule } from './address/address.module';
 
 @Module({
   imports: [
@@ -29,6 +32,9 @@ import { LocationModule } from './location/location.module';
     CarModule,
     RideModule,
     LocationModule,
+    AddressModule,
   ],
+  providers: [AddressService],
+  controllers: [AddressController],
 })
 export class AppModule {}

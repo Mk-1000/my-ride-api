@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const create_address_dto_1 = require("../../address/dto/create-address.dto");
 class CreateUserDto {
 }
 exports.CreateUserDto = CreateUserDto;
@@ -38,4 +39,8 @@ __decorate([
     (0, swagger_1.ApiProperty)({ example: 'CUSTOMER', description: 'The type of user', required: true }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "userType", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: create_address_dto_1.CreateAddressDto, description: 'The address of the user', required: true }),
+    __metadata("design:type", create_address_dto_1.CreateAddressDto)
+], CreateUserDto.prototype, "address", void 0);
 //# sourceMappingURL=create-user.dto.js.map

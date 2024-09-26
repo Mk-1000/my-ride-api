@@ -34,6 +34,7 @@ let UserService = class UserService {
         const newUser = this.userRepository.create({
             ...createUserDto,
             encryptedPassword: hashedPassword,
+            address: createUserDto.address,
         });
         return this.userRepository.save(newUser);
     }

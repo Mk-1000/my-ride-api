@@ -1,5 +1,6 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Address } from 'src/entities/address.entity';
 import { CustomerModule } from '../customer/customer.module'; // Import CustomerModule
 import { Customer } from '../entities/customer.entity';
 import { Rider } from '../entities/rider.entity';
@@ -10,7 +11,7 @@ import { UserService } from './user.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Customer, Rider]), // Register all entities
+    TypeOrmModule.forFeature([User, Customer, Rider,Address]), // Register all entities
     forwardRef(() => RiderModule), // Avoid circular dependency
     forwardRef(() => CustomerModule),
   ],

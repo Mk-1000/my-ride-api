@@ -1,3 +1,4 @@
+import { Address } from './address.entity';
 export declare class User {
     id: number;
     name: string;
@@ -7,4 +8,5 @@ export declare class User {
     phoneNumber: string;
     profilePictureUrl: string;
     userType: string;
+    address: Address;
 }

@@ -20,10 +20,6 @@ __decorate([
     __metadata("design:type", create_user_dto_1.CreateUserDto)
 ], CreateCustomerDto.prototype, "user", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: '123 Main St', description: 'The address of the customer', required: false }),
-    __metadata("design:type", String)
-], CreateCustomerDto.prototype, "address", void 0);
-__decorate([
     (0, swagger_1.ApiProperty)({ example: 100, description: 'Loyalty points of the customer', required: false }),
     __metadata("design:type", Number)
 ], CreateCustomerDto.prototype, "loyaltyPoints", void 0);

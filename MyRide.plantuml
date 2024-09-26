@@ -10,7 +10,7 @@ class User #LightSeaGreen {
   +address: Address
 }
 
-class Address {
+class Address #LightSeaGreen {
   +street: String
   +city: String
   +state: String
@@ -124,7 +124,7 @@ enum VerificationStatus {
 ' Relationships
 Customer "1" -- "1" Verification: hasCin
 Rider "1" -- "1" Verification: hasLicence
-User "1" -- "1" Address: has
+User "1" -- "1" Address #LightSeaGreen: has
 
 User <|-- Rider #LightSeaGreen
 User <|-- Customer #LightSeaGreen

@@ -30,7 +30,6 @@ let CustomerService = class CustomerService {
             const newCustomer = this.customerRepository.create({
                 ...createCustomerDto.user,
                 encryptedPassword: hashedPassword,
-                address: createCustomerDto.address,
                 loyaltyPoints: createCustomerDto.loyaltyPoints,
                 userType: 'CUSTOMER',
             });

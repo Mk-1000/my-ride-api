@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { CreateAddressDto } from 'src/address/dto/create-address.dto';
 
 export class CreateUserDto {
   @ApiProperty({ example: 'Mokni Hamdi', description: 'The name of the user' })
@@ -18,5 +19,9 @@ export class CreateUserDto {
 
   // Add userType to the DTO
   @ApiProperty({ example: 'CUSTOMER', description: 'The type of user', required: true })
-  userType: string; 
+  userType: string;
+  
+  // Address property in the DTO
+  @ApiProperty({ type: CreateAddressDto, description: 'The address of the user', required: true })
+  address: CreateAddressDto;
 }

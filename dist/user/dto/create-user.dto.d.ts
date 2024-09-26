@@ -1,3 +1,4 @@
+import { CreateAddressDto } from 'src/address/dto/create-address.dto';
 export declare class CreateUserDto {
     name: string;
     email: string;
@@ -5,4 +6,5 @@ export declare class CreateUserDto {
     phoneNumber?: string;
     profilePictureUrl?: string;
     userType: string;
+    address: CreateAddressDto;
 }

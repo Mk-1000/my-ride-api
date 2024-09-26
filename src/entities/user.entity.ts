@@ -1,5 +1,6 @@
 import * as bcrypt from 'bcrypt';
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn, TableInheritance } from 'typeorm';
+import { BeforeInsert, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, TableInheritance } from 'typeorm';
+import { Address } from './address.entity';
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'userType' } })
@@ -29,4 +30,9 @@ export class User {
 
   @Column({ default: 'CUSTOMER' })
   userType: string;
+
+  // One-to-One relationship with Address
+  @OneToOne(() => Address, { cascade: true, eager: true })  // Cascade ensures address is saved when saving the user
+  @JoinColumn()  // This defines that the User entity owns the relationship and will store the foreign key
+  address: Address;
 }

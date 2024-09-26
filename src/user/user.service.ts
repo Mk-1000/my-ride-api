@@ -29,6 +29,7 @@ export class UserService {
     const newUser = this.userRepository.create({
       ...createUserDto,
       encryptedPassword: hashedPassword, // Use hashed password instead
+      address: createUserDto.address,
     });
 
     return this.userRepository.save(newUser);

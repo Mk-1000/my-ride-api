@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const bcrypt = require("bcrypt");
 const typeorm_1 = require("typeorm");
+const address_entity_1 = require("./address.entity");
 let User = class User {
     async hashPassword() {
         this.encryptedPassword = await bcrypt.hash(this.encryptedPassword, 10);
@@ -52,6 +53,11 @@ __decorate([
     (0, typeorm_1.Column)({ default: 'CUSTOMER' }),
     __metadata("design:type", String)
 ], User.prototype, "userType", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => address_entity_1.Address, { cascade: true, eager: true }),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", address_entity_1.Address)
+], User.prototype, "address", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)(),
     (0, typeorm_1.TableInheritance)({ column: { type: 'varchar', name: 'userType' } })

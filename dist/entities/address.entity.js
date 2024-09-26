@@ -9,17 +9,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Customer = void 0;
+exports.Address = void 0;
 const typeorm_1 = require("typeorm");
-const user_entity_1 = require("./user.entity");
-let Customer = class Customer extends user_entity_1.User {
+let Address = class Address {
 };
-exports.Customer = Customer;
+exports.Address = Address;
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Customer.prototype, "loyaltyPoints", void 0);
-exports.Customer = Customer = __decorate([
-    (0, typeorm_1.ChildEntity)()
-], Customer);
-//# sourceMappingURL=customer.entity.js.map
+], Address.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Address.prototype, "street", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Address.prototype, "city", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Address.prototype, "state", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Address.prototype, "zipCode", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Address.prototype, "country", void 0);
+exports.Address = Address = __decorate([
+    (0, typeorm_1.Entity)()
+], Address);
+//# sourceMappingURL=address.entity.js.map
