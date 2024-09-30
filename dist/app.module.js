@@ -10,15 +10,14 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
+const address_module_1 = require("./address/address.module");
 const car_module_1 = require("./car/car.module");
 const customer_module_1 = require("./customer/customer.module");
+const location_module_1 = require("./location/location.module");
+const message_module_1 = require("./message/message.module");
+const ride_module_1 = require("./ride/ride.module");
 const rider_module_1 = require("./rider/rider.module");
 const user_module_1 = require("./user/user.module");
-const ride_module_1 = require("./ride/ride.module");
-const location_module_1 = require("./location/location.module");
-const address_service_1 = require("./address/address.service");
-const address_controller_1 = require("./address/address.controller");
-const address_module_1 = require("./address/address.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -45,9 +44,10 @@ exports.AppModule = AppModule = __decorate([
             ride_module_1.RideModule,
             location_module_1.LocationModule,
             address_module_1.AddressModule,
+            message_module_1.MessageModule,
         ],
-        providers: [address_service_1.AddressService],
-        controllers: [address_controller_1.AddressController],
+        providers: [],
+        controllers: [],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

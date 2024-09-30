@@ -1,15 +1,14 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AddressModule } from './address/address.module';
 import { CarModule } from './car/car.module';
 import { CustomerModule } from './customer/customer.module';
+import { LocationModule } from './location/location.module';
+import { MessageModule } from './message/message.module';
+import { RideModule } from './ride/ride.module';
 import { RiderModule } from './rider/rider.module';
 import { UserModule } from './user/user.module';
-import { RideModule } from './ride/ride.module';
-import { LocationModule } from './location/location.module';
-import { AddressService } from './address/address.service';
-import { AddressController } from './address/address.controller';
-import { AddressModule } from './address/address.module';
 
 @Module({
   imports: [
@@ -33,8 +32,9 @@ import { AddressModule } from './address/address.module';
     RideModule,
     LocationModule,
     AddressModule,
+    MessageModule,
   ],
-  providers: [AddressService],
-  controllers: [AddressController],
+  providers: [],
+  controllers: [],
 })
 export class AppModule {}

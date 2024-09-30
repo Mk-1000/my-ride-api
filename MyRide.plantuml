@@ -83,7 +83,7 @@ class Rating {
   +ratingDate: Date
 }
 
-class Message {
+class Message #LightSeaGreen {
   +id: Long
   +sender: User
   +receiver: User
@@ -123,7 +123,7 @@ enum VerificationStatus {
 
 ' Relationships
 Customer "1" -- "1" Verification: hasCin
-Rider "1" -- "1" Verification: hasLicence
+Rider "1" --* "1" Verification : hasLicence
 User "1" -- "1" Address #LightSeaGreen: has
 
 User <|-- Rider #LightSeaGreen
@@ -136,8 +136,8 @@ Customer "0..*" -- "0..*" Booking: books
 Ride "1" -- "0..*" Rating: receives
 User "1" -- "0..*" Rating: givesRating
 User "1" -- "0..*" Rating: receivesRating
-User "1" -- "0..*" Message: sends
-User "1" -- "0..*" Message: receives
+User "1" -- "0..*" Message #LightSeaGreen : sends
+User "1" -- "0..*" Message #LightSeaGreen : receives
 Ride "1" -- "1" Location #LightSeaGreen : startLocation
 Ride "1" -- "1" Location #LightSeaGreen : endLocation
 @enduml

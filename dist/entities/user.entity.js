@@ -13,6 +13,7 @@ exports.User = void 0;
 const bcrypt = require("bcrypt");
 const typeorm_1 = require("typeorm");
 const address_entity_1 = require("./address.entity");
+const message_entity_1 = require("./message.entity");
 let User = class User {
     async hashPassword() {
         this.encryptedPassword = await bcrypt.hash(this.encryptedPassword, 10);
@@ -58,6 +59,14 @@ __decorate([
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", address_entity_1.Address)
 ], User.prototype, "address", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => message_entity_1.Message, (message) => message.sender),
+    __metadata("design:type", Array)
+], User.prototype, "sentMessages", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => message_entity_1.Message, (message) => message.receiver),
+    __metadata("design:type", Array)
+], User.prototype, "receivedMessages", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)(),
     (0, typeorm_1.TableInheritance)({ column: { type: 'varchar', name: 'userType' } })
