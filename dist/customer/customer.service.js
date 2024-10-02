@@ -43,6 +43,13 @@ let CustomerService = class CustomerService {
     async findAll() {
         return this.customerRepository.find();
     }
+    async findOne(id) {
+        const customer = await this.customerRepository.findOne({ where: { id } });
+        if (!customer) {
+            throw new common_1.NotFoundException(`Customer with ID ${id} not found`);
+        }
+        return customer;
+    }
 };
 exports.CustomerService = CustomerService;
 exports.CustomerService = CustomerService = __decorate([

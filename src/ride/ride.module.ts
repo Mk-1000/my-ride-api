@@ -1,5 +1,6 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { BookingModule } from 'src/booking/booking.module';
 import { LocationModule } from 'src/location/location.module';
 import { CarService } from '../car/car.service';
 import { Car } from '../entities/car.entity';
@@ -12,10 +13,12 @@ import { RideService } from './ride.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Ride, Rider, Car]),  // Register Ride, Rider, and Car repositories
-    UserModule, LocationModule// Include UserModule to make UserService available
+    TypeOrmModule.forFeature([Ride, Rider, Car]),
+    forwardRef(() => BookingModule),
+    UserModule, LocationModule
   ],
   providers: [RideService, RiderService, CarService],
   controllers: [RideController],
+  exports: [RideService],
 })
 export class RideModule {}

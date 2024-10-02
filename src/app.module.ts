@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AddressModule } from './address/address.module';
+import { BookingModule } from './booking/booking.module';
 import { CarModule } from './car/car.module';
 import { CustomerModule } from './customer/customer.module';
 import { LocationModule } from './location/location.module';
@@ -33,8 +34,8 @@ import { UserModule } from './user/user.module';
     LocationModule,
     AddressModule,
     MessageModule,
+    BookingModule,
   ],
-  providers: [],
-  controllers: [],
+
 })
 export class AppModule {}

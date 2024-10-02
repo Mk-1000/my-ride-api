@@ -1,4 +1,3 @@
-// src/entities/car.entity.ts
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Rider } from './rider.entity';
 

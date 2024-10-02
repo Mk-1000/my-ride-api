@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
 const address_module_1 = require("./address/address.module");
+const booking_module_1 = require("./booking/booking.module");
 const car_module_1 = require("./car/car.module");
 const customer_module_1 = require("./customer/customer.module");
 const location_module_1 = require("./location/location.module");
@@ -45,9 +46,8 @@ exports.AppModule = AppModule = __decorate([
             location_module_1.LocationModule,
             address_module_1.AddressModule,
             message_module_1.MessageModule,
+            booking_module_1.BookingModule,
         ],
-        providers: [],
-        controllers: [],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

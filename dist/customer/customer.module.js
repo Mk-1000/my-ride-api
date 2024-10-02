@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomerModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const booking_module_1 = require("../booking/booking.module");
 const customer_entity_1 = require("../entities/customer.entity");
 const user_module_1 = require("../user/user.module");
 const customer_controller_1 = require("./customer.controller");
@@ -21,6 +22,7 @@ exports.CustomerModule = CustomerModule = __decorate([
         imports: [
             typeorm_1.TypeOrmModule.forFeature([customer_entity_1.Customer]),
             (0, common_1.forwardRef)(() => user_module_1.UserModule),
+            (0, common_1.forwardRef)(() => booking_module_1.BookingModule),
         ],
         controllers: [customer_controller_1.CustomerController],
         providers: [customer_service_1.CustomerService],

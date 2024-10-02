@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
@@ -38,4 +38,16 @@ export class CustomerService {
   async findAll(): Promise<Customer[]> {
     return this.customerRepository.find(); // No need for 'user' relation as Customer extends User
   }
+
+    // Find a specific customer by ID
+    async findOne(id: number): Promise<Customer> {
+      const customer = await this.customerRepository.findOne({ where: { id } });
+  
+      if (!customer) {
+        throw new NotFoundException(`Customer with ID ${id} not found`);
+      }
+  
+      return customer;
+    }
+
 }
