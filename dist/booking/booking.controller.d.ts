@@ -6,4 +6,9 @@ export declare class BookingController {
     constructor(bookingService: BookingService);
     create(createBookingDto: CreateBookingDto): Promise<Booking>;
     findAll(): Promise<Booking[]>;
+    findOne(id: number): Promise<Booking>;
+    findByRideId(rideId: number): Promise<Booking[]>;
+    accept(id: number): Promise<Booking>;
+    refuse(id: number): Promise<Booking>;
+    delete(id: number): Promise<void>;
 }

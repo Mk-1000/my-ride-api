@@ -27,6 +27,21 @@ let BookingController = class BookingController {
     async findAll() {
         return this.bookingService.findAll();
     }
+    async findOne(id) {
+        return this.bookingService.findOne(id);
+    }
+    async findByRideId(rideId) {
+        return this.bookingService.findByRideId(rideId);
+    }
+    async accept(id) {
+        return this.bookingService.acceptBooking(id);
+    }
+    async refuse(id) {
+        return this.bookingService.refuseBooking(id);
+    }
+    async delete(id) {
+        return this.bookingService.delete(id);
+    }
 };
 exports.BookingController = BookingController;
 __decorate([
@@ -44,6 +59,46 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], BookingController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get a booking by ID' }),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], BookingController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Get)('ride/:rideId'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get bookings by ride ID' }),
+    __param(0, (0, common_1.Param)('rideId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], BookingController.prototype, "findByRideId", null);
+__decorate([
+    (0, common_1.Patch)(':id/accept'),
+    (0, swagger_1.ApiOperation)({ summary: 'Accept a booking' }),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], BookingController.prototype, "accept", null);
+__decorate([
+    (0, common_1.Patch)(':id/refuse'),
+    (0, swagger_1.ApiOperation)({ summary: 'Refuse a booking' }),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], BookingController.prototype, "refuse", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a booking by ID' }),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], BookingController.prototype, "delete", null);
 exports.BookingController = BookingController = __decorate([
     (0, swagger_1.ApiTags)('bookings'),
     (0, common_1.Controller)('bookings'),

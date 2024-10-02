@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CustomerService } from 'src/customer/customer.service';
 import { RideService } from 'src/ride/ride.service';
@@ -8,12 +8,13 @@ import { CreateBookingDto } from './dto/create-booking.dto';
 
 @Injectable()
 export class BookingService {
-  constructor(
-    @InjectRepository(Booking)
-    private bookingRepository: Repository<Booking>,
-    private rideService: RideService,
-    private customerService: CustomerService,
-  ) {}
+    constructor(
+      @InjectRepository(Booking)
+      private bookingRepository: Repository<Booking>,
+      @Inject(forwardRef(() => RideService)) // Use forwardRef here
+      private rideService: RideService,
+      private customerService: CustomerService,
+    ) {}
 
   async create(createBookingDto: CreateBookingDto): Promise<Booking> {
     const { rideId, passengerId, seatCount, totalPrice } = createBookingDto;
@@ -43,4 +44,61 @@ export class BookingService {
   async findAll(): Promise<Booking[]> {
     return this.bookingRepository.find({ relations: ['ride', 'passenger'] });
   }
+
+  // Method to accept a booking
+  async acceptBooking(id: number): Promise<Booking> {
+    const booking = await this.bookingRepository.findOneBy({ id });
+    if (!booking) {
+      throw new NotFoundException(`Booking with ID ${id} not found`);
+    }
+    booking.status = BookingStatus.CONFIRMED;
+    return this.bookingRepository.save(booking);
+  }
+
+  // Method to refuse a booking
+  async refuseBooking(id: number): Promise<Booking> {
+    const booking = await this.bookingRepository.findOneBy({ id });
+    if (!booking) {
+      throw new NotFoundException(`Booking with ID ${id} not found`);
+    }
+    booking.status = BookingStatus.CANCELLED;
+    return this.bookingRepository.save(booking);
+  }
+  
+  async findByRideId(rideId: number): Promise<Booking[]> {
+    return this.bookingRepository.find({
+      where: { ride: { id: rideId } },
+      relations: ['ride', 'passenger'],
+    });
+  }
+  // Add these methods in BookingService
+
+async findOne(id: number): Promise<Booking> {
+    const booking = await this.bookingRepository.findOne({
+      where: { id },
+      relations: ['ride', 'passenger'],
+    });
+    
+    if (!booking) {
+      throw new NotFoundException(`Booking with ID ${id} not found`);
+    }
+  
+    return booking;
+  }
+  
+  async delete(id: number): Promise<void> {
+    const result = await this.bookingRepository.delete(id);
+    
+    if (result.affected === 0) {
+      throw new NotFoundException(`Booking with ID ${id} not found`);
+    }
+  }
+  
+  async removeByRideId(rideId: number): Promise<void> {
+    const result = await this.bookingRepository.delete({ ride: { id: rideId } });
+    
+    if (result.affected === 0) {
+        throw new NotFoundException(`No bookings found for ride with ID ${rideId}`);
+    }
+}
 }

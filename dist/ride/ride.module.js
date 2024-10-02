@@ -27,7 +27,8 @@ exports.RideModule = RideModule = __decorate([
         imports: [
             typeorm_1.TypeOrmModule.forFeature([ride_entity_1.Ride, rider_entity_1.Rider, car_entity_1.Car]),
             (0, common_1.forwardRef)(() => booking_module_1.BookingModule),
-            user_module_1.UserModule, location_module_1.LocationModule
+            user_module_1.UserModule,
+            location_module_1.LocationModule,
         ],
         providers: [ride_service_1.RideService, rider_service_1.RiderService, car_service_1.CarService],
         controllers: [ride_controller_1.RideController],

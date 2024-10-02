@@ -1,3 +1,4 @@
+import { RideStatus } from 'src/entities/ride.entity';
 import { CreateLocationDto } from 'src/location/dto/create-location.dto';
 export declare class CreateRideDto {
     startLocation: CreateLocationDto;
@@ -8,4 +9,5 @@ export declare class CreateRideDto {
     pricePerSeat: number;
     driverId: number;
     carId: number;
+    status: RideStatus;
 }

@@ -12,8 +12,6 @@ const typeorm_1 = require("@nestjs/typeorm");
 const customer_module_1 = require("../customer/customer.module");
 const ride_module_1 = require("../ride/ride.module");
 const booking_entity_1 = require("../entities/booking.entity");
-const customer_entity_1 = require("../entities/customer.entity");
-const ride_entity_1 = require("../entities/ride.entity");
 const booking_controller_1 = require("./booking.controller");
 const booking_service_1 = require("./booking.service");
 let BookingModule = class BookingModule {
@@ -22,12 +20,13 @@ exports.BookingModule = BookingModule;
 exports.BookingModule = BookingModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([booking_entity_1.Booking, ride_entity_1.Ride, customer_entity_1.Customer]),
+            typeorm_1.TypeOrmModule.forFeature([booking_entity_1.Booking]),
             (0, common_1.forwardRef)(() => customer_module_1.CustomerModule),
             (0, common_1.forwardRef)(() => ride_module_1.RideModule),
         ],
         controllers: [booking_controller_1.BookingController],
         providers: [booking_service_1.BookingService],
+        exports: [booking_service_1.BookingService],
     })
 ], BookingModule);
 //# sourceMappingURL=booking.module.js.map

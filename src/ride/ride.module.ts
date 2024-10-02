@@ -7,15 +7,16 @@ import { Car } from '../entities/car.entity';
 import { Ride } from '../entities/ride.entity';
 import { Rider } from '../entities/rider.entity';
 import { RiderService } from '../rider/rider.service';
-import { UserModule } from '../user/user.module'; // Import UserModule
+import { UserModule } from '../user/user.module';
 import { RideController } from './ride.controller';
 import { RideService } from './ride.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Ride, Rider, Car]),
-    forwardRef(() => BookingModule),
-    UserModule, LocationModule
+    forwardRef(() => BookingModule), // Using forwardRef to prevent circular dependency
+    UserModule, 
+    LocationModule,
   ],
   providers: [RideService, RiderService, CarService],
   controllers: [RideController],

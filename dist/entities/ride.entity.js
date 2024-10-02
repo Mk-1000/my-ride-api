@@ -9,11 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Ride = void 0;
+exports.Ride = exports.RideStatus = void 0;
 const typeorm_1 = require("typeorm");
 const car_entity_1 = require("./car.entity");
 const location_entity_1 = require("./location.entity");
 const rider_entity_1 = require("./rider.entity");
+var RideStatus;
+(function (RideStatus) {
+    RideStatus["ACTIVE"] = "ACTIVE";
+    RideStatus["COMPLETED"] = "COMPLETED";
+    RideStatus["CANCELLED"] = "CANCELLED";
+})(RideStatus || (exports.RideStatus = RideStatus = {}));
 let Ride = class Ride {
 };
 exports.Ride = Ride;
@@ -57,6 +63,14 @@ __decorate([
     (0, typeorm_1.JoinColumn)({ name: 'car_id' }),
     __metadata("design:type", car_entity_1.Car)
 ], Ride.prototype, "car", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: RideStatus,
+        default: RideStatus.ACTIVE,
+    }),
+    __metadata("design:type", String)
+], Ride.prototype, "status", void 0);
 exports.Ride = Ride = __decorate([
     (0, typeorm_1.Entity)()
 ], Ride);

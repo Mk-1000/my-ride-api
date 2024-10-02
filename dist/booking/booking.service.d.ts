@@ -10,4 +10,10 @@ export declare class BookingService {
     constructor(bookingRepository: Repository<Booking>, rideService: RideService, customerService: CustomerService);
     create(createBookingDto: CreateBookingDto): Promise<Booking>;
     findAll(): Promise<Booking[]>;
+    acceptBooking(id: number): Promise<Booking>;
+    refuseBooking(id: number): Promise<Booking>;
+    findByRideId(rideId: number): Promise<Booking[]>;
+    findOne(id: number): Promise<Booking>;
+    delete(id: number): Promise<void>;
+    removeByRideId(rideId: number): Promise<void>;
 }

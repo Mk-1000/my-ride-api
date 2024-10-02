@@ -1,6 +1,11 @@
 import { Car } from './car.entity';
 import { Location } from './location.entity';
 import { Rider } from './rider.entity';
+export declare enum RideStatus {
+    ACTIVE = "ACTIVE",
+    COMPLETED = "COMPLETED",
+    CANCELLED = "CANCELLED"
+}
 export declare class Ride {
     id: number;
     startLocation: Location;
@@ -11,4 +16,5 @@ export declare class Ride {
     pricePerSeat: number;
     driver: Rider;
     car: Car;
+    status: RideStatus;
 }

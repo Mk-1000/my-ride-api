@@ -3,6 +3,12 @@ import { Car } from './car.entity';
 import { Location } from './location.entity';
 import { Rider } from './rider.entity';
 
+export enum RideStatus {
+  ACTIVE = 'ACTIVE',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
+}
+
 @Entity()
 export class Ride {
   @PrimaryGeneratedColumn('increment')
@@ -35,4 +41,11 @@ export class Ride {
   @ManyToOne(() => Car)
   @JoinColumn({ name: 'car_id' })
   car: Car;
+
+  @Column({
+    type: 'enum',
+    enum: RideStatus,
+    default: RideStatus.ACTIVE, // Set default status if needed
+  })
+  status: RideStatus; // Add status field
 }

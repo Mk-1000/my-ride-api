@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { RideStatus } from 'src/entities/ride.entity';
 import { CreateLocationDto } from 'src/location/dto/create-location.dto';
 
 export class CreateRideDto {
@@ -25,4 +26,7 @@ export class CreateRideDto {
 
   @ApiProperty({ example: 2, description: 'Car ID' })
   carId: number;
+
+  @ApiProperty({ enum: RideStatus, description: 'Status of the ride' })
+  status: RideStatus; // Add status property
 }

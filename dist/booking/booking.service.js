@@ -44,11 +44,56 @@ let BookingService = class BookingService {
     async findAll() {
         return this.bookingRepository.find({ relations: ['ride', 'passenger'] });
     }
+    async acceptBooking(id) {
+        const booking = await this.bookingRepository.findOneBy({ id });
+        if (!booking) {
+            throw new common_1.NotFoundException(`Booking with ID ${id} not found`);
+        }
+        booking.status = booking_entity_1.BookingStatus.CONFIRMED;
+        return this.bookingRepository.save(booking);
+    }
+    async refuseBooking(id) {
+        const booking = await this.bookingRepository.findOneBy({ id });
+        if (!booking) {
+            throw new common_1.NotFoundException(`Booking with ID ${id} not found`);
+        }
+        booking.status = booking_entity_1.BookingStatus.CANCELLED;
+        return this.bookingRepository.save(booking);
+    }
+    async findByRideId(rideId) {
+        return this.bookingRepository.find({
+            where: { ride: { id: rideId } },
+            relations: ['ride', 'passenger'],
+        });
+    }
+    async findOne(id) {
+        const booking = await this.bookingRepository.findOne({
+            where: { id },
+            relations: ['ride', 'passenger'],
+        });
+        if (!booking) {
+            throw new common_1.NotFoundException(`Booking with ID ${id} not found`);
+        }
+        return booking;
+    }
+    async delete(id) {
+        const result = await this.bookingRepository.delete(id);
+        if (result.affected === 0) {
+            throw new common_1.NotFoundException(`Booking with ID ${id} not found`);
+        }
+    }
+    async removeByRideId(rideId) {
+        const result = await this.bookingRepository.delete({ ride: { id: rideId } });
+        if (result.affected === 0) {
+            throw new common_1.NotFoundException(`No bookings found for ride with ID ${rideId}`);
+        }
+    }
 };
 exports.BookingService = BookingService;
 exports.BookingService = BookingService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(booking_entity_1.Booking)),
+    __param(1, (0, common_1.Inject)((0, common_1.forwardRef)(() => ride_service_1.RideService))),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         ride_service_1.RideService,
         customer_service_1.CustomerService])

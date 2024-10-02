@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateRideDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const ride_entity_1 = require("../../entities/ride.entity");
 const create_location_dto_1 = require("../../location/dto/create-location.dto");
 class CreateRideDto {
 }
@@ -47,4 +48,8 @@ __decorate([
     (0, swagger_1.ApiProperty)({ example: 2, description: 'Car ID' }),
     __metadata("design:type", Number)
 ], CreateRideDto.prototype, "carId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ enum: ride_entity_1.RideStatus, description: 'Status of the ride' }),
+    __metadata("design:type", String)
+], CreateRideDto.prototype, "status", void 0);
 //# sourceMappingURL=create-ride.dto.js.map
