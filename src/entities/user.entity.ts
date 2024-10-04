@@ -2,6 +2,8 @@ import * as bcrypt from 'bcrypt';
 import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, TableInheritance } from 'typeorm';
 import { Address } from './address.entity';
 import { Message } from './message.entity';
+import { Rating } from './ranting.entity';
+
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'userType' } })
@@ -41,4 +43,10 @@ export class User {
 
   @OneToMany(() => Message, (message) => message.receiver)
   receivedMessages: Message[];
+
+  @OneToMany(() => Rating, (rating) => rating.rater)
+  givenRatings: Rating[];
+
+  @OneToMany(() => Rating, (rating) => rating.ratee)
+  receivedRatings: Rating[];
 }

@@ -13,6 +13,7 @@ exports.Ride = exports.RideStatus = void 0;
 const typeorm_1 = require("typeorm");
 const car_entity_1 = require("./car.entity");
 const location_entity_1 = require("./location.entity");
+const ranting_entity_1 = require("./ranting.entity");
 const rider_entity_1 = require("./rider.entity");
 var RideStatus;
 (function (RideStatus) {
@@ -71,6 +72,10 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Ride.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => ranting_entity_1.Rating, (rating) => rating.ride),
+    __metadata("design:type", Array)
+], Ride.prototype, "ratings", void 0);
 exports.Ride = Ride = __decorate([
     (0, typeorm_1.Entity)()
 ], Ride);

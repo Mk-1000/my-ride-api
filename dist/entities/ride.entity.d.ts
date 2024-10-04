@@ -1,5 +1,6 @@
 import { Car } from './car.entity';
 import { Location } from './location.entity';
+import { Rating } from './ranting.entity';
 import { Rider } from './rider.entity';
 export declare enum RideStatus {
     ACTIVE = "ACTIVE",
@@ -17,4 +18,5 @@ export declare class Ride {
     driver: Rider;
     car: Car;
     status: RideStatus;
+    ratings: Rating[];
 }

@@ -16,6 +16,7 @@ const car_module_1 = require("./car/car.module");
 const customer_module_1 = require("./customer/customer.module");
 const location_module_1 = require("./location/location.module");
 const message_module_1 = require("./message/message.module");
+const rating_module_1 = require("./rating/rating.module");
 const ride_module_1 = require("./ride/ride.module");
 const rider_module_1 = require("./rider/rider.module");
 const user_module_1 = require("./user/user.module");
@@ -47,6 +48,7 @@ exports.AppModule = AppModule = __decorate([
             address_module_1.AddressModule,
             message_module_1.MessageModule,
             booking_module_1.BookingModule,
+            rating_module_1.RatingModule,
         ],
     })
 ], AppModule);

@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Car } from './car.entity';
 import { Location } from './location.entity';
+import { Rating } from './ranting.entity';
 import { Rider } from './rider.entity';
 
 export enum RideStatus {
@@ -45,7 +46,10 @@ export class Ride {
   @Column({
     type: 'enum',
     enum: RideStatus,
-    default: RideStatus.ACTIVE, // Set default status if needed
+    default: RideStatus.ACTIVE,
   })
-  status: RideStatus; // Add status field
+  status: RideStatus;
+
+  @OneToMany(() => Rating, (rating) => rating.ride)
+  ratings: Rating[];
 }
