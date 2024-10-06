@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Car } from './car.entity';
 import { Location } from './location.entity';
-import { Rating } from './ranting.entity';
+import { Rating } from './rating.entity';
 import { Rider } from './rider.entity';
 
 export enum RideStatus {
@@ -49,7 +49,7 @@ export class Ride {
     default: RideStatus.ACTIVE,
   })
   status: RideStatus;
-
+  
   @OneToMany(() => Rating, (rating) => rating.ride)
   ratings: Rating[];
 }

@@ -1,7 +1,9 @@
+import { RatingType } from 'src/entities/rating.entity';
 export declare class CreateRatingDto {
+    score: number;
+    comments?: string;
     rideId: number;
     raterId: number;
-    rateeId: number;
-    score: number;
-    comment: string;
+    ratedId: number;
+    type: RatingType;
 }

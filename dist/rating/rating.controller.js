@@ -14,45 +14,40 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RatingController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const create_rating_dto_1 = require("./dto/create-rating.dto");
 const rating_service_1 = require("./rating.service");
 let RatingController = class RatingController {
     constructor(ratingService) {
         this.ratingService = ratingService;
     }
-    create(createRatingDto) {
+    async create(createRatingDto) {
         return this.ratingService.create(createRatingDto);
     }
-    findByRide(rideId) {
-        return this.ratingService.findByRide(+rideId);
-    }
-    findByUser(userId) {
-        return this.ratingService.findByUser(+userId);
+    async findAll(page = 1, limit = 10) {
+        return this.ratingService.findAll(page, limit);
     }
 };
 exports.RatingController = RatingController;
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new rating' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_rating_dto_1.CreateRatingDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], RatingController.prototype, "create", null);
 __decorate([
-    (0, common_1.Get)('ride/:rideId'),
-    __param(0, (0, common_1.Param)('rideId')),
+    (0, common_1.Get)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all ratings with pagination' }),
+    __param(0, (0, common_1.Query)('page')),
+    __param(1, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], RatingController.prototype, "findByRide", null);
-__decorate([
-    (0, common_1.Get)('user/:userId'),
-    __param(0, (0, common_1.Param)('userId')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], RatingController.prototype, "findByUser", null);
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], RatingController.prototype, "findAll", null);
 exports.RatingController = RatingController = __decorate([
+    (0, swagger_1.ApiTags)('ratings'),
     (0, common_1.Controller)('ratings'),
     __metadata("design:paramtypes", [rating_service_1.RatingService])
 ], RatingController);

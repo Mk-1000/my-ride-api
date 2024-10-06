@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Rider = void 0;
 const typeorm_1 = require("typeorm");
 const car_entity_1 = require("./car.entity");
+const rating_entity_1 = require("./rating.entity");
 const user_entity_1 = require("./user.entity");
 let Rider = class Rider extends user_entity_1.User {
 };
@@ -28,6 +29,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => car_entity_1.Car, (car) => car.rider),
     __metadata("design:type", Array)
 ], Rider.prototype, "cars", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => rating_entity_1.Rating, (rating) => rating.rider),
+    __metadata("design:type", Array)
+], Rider.prototype, "ratings", void 0);
 exports.Rider = Rider = __decorate([
     (0, typeorm_1.ChildEntity)()
 ], Rider);

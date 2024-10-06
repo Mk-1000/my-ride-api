@@ -1,52 +1,94 @@
+
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Rating } from '../entities/ranting.entity';
-import { RideService } from '../ride/ride.service';
-import { UserService } from '../user/user.service';
+import { Customer } from '../entities/customer.entity';
+import { Rating, RatingType } from '../entities/rating.entity';
+import { Ride } from '../entities/ride.entity';
+import { Rider } from '../entities/rider.entity';
 import { CreateRatingDto } from './dto/create-rating.dto';
-
 @Injectable()
 export class RatingService {
   constructor(
     @InjectRepository(Rating)
-    private ratingRepository: Repository<Rating>,
-    private readonly userService: UserService,
-    private readonly rideService: RideService,
+    private readonly ratingRepository: Repository<Rating>,
+    @InjectRepository(Customer)
+    private readonly customerRepository: Repository<Customer>,
+    @InjectRepository(Rider)
+    private readonly riderRepository: Repository<Rider>,
+    @InjectRepository(Ride)
+    private readonly rideRepository: Repository<Ride>,
   ) {}
 
   async create(createRatingDto: CreateRatingDto): Promise<Rating> {
-    const { rideId, raterId, rateeId, score, comment } = createRatingDto;
-    const ride = await this.rideService.findOne(rideId);
-    const rater = await this.userService.findOne(raterId);
-    const ratee = await this.userService.findOne(rateeId);
+    const { score, comments, rideId, raterId, ratedId, type } = createRatingDto;
 
-    if (!ride || !rater || !ratee) {
-      throw new NotFoundException('Ride or User not found');
+    // Find the ride
+    const ride = await this.rideRepository.findOne({ where: { id: rideId } });
+    if (!ride) {
+        throw new NotFoundException(`Ride with ID ${rideId} not found`);
     }
 
-    const rating = this.ratingRepository.create({
-      ride,
-      rater,
-      ratee,
-      score,
-      comment,
-    });
+    // Prevent duplicate ratings in the same direction
+    let existingRating 
+    if(createRatingDto.type== RatingType.CustomerToRider){
+        existingRating = await this.ratingRepository.findOne({
+            where: {
+                ride: { id: rideId },
+                ...(type === RatingType.CustomerToRider
+                    ? { customer: { id: raterId }, rider: { id: ratedId } }
+                    : { rider: { id: raterId }, customer: { id: ratedId } }),
+            },
+        });
+    }else{
+        existingRating = await this.ratingRepository.findOne({
+            where: {
+                ride: { id: rideId },
+                ...(type === RatingType.RiderToCustomer
+                    ? { customer: { id: raterId }, rider: { id: ratedId } }
+                    : { rider: { id: raterId }, customer: { id: ratedId } }),
+            },
+        });
+    }
+
+
+    // If an existing rating is found, throw an exception
+    if (existingRating) {
+        throw new NotFoundException(`Rating for this ride by this rater already exists in direction ${type}`);
+    }
+
+    const rating = new Rating();
+    rating.score = score;
+    rating.comments = comments;
+    rating.ride = ride;
+    rating.type = type;
+
+    // Find customer and rider based on rating type
+    if (type === RatingType.CustomerToRider) {
+        const customer = await this.customerRepository.findOne({ where: { id: raterId } });
+        const rider = await this.riderRepository.findOne({ where: { id: ratedId } });
+        if (!customer || !rider) {
+            throw new NotFoundException(`Customer or Rider not found`);
+        }
+        rating.customer = customer;
+        rating.rider = rider;
+    } else if (type === RatingType.RiderToCustomer) {
+        const rider = await this.riderRepository.findOne({ where: { id: raterId } });
+        const customer = await this.customerRepository.findOne({ where: { id: ratedId } });
+        if (!rider || !customer) {
+            throw new NotFoundException(`Rider or Customer not found`);
+        }
+        rating.rider = rider;
+        rating.customer = customer;
+    }
 
     return this.ratingRepository.save(rating);
-  }
+}
 
-  async findByRide(rideId: number): Promise<Rating[]> {
+  async findAll(page = 1, limit = 10): Promise<Rating[]> {
     return this.ratingRepository.find({
-      where: { ride: { id: rideId } },
-      relations: ['ride', 'rater', 'ratee'],
-    });
-  }
-
-  async findByUser(userId: number): Promise<Rating[]> {
-    return this.ratingRepository.find({
-      where: [{ rater: { id: userId } }, { ratee: { id: userId } }],
-      relations: ['ride', 'rater', 'ratee'],
+      skip: (page - 1) * limit,
+      take: limit,
     });
   }
 }

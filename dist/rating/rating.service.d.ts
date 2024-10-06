@@ -1,14 +1,15 @@
 import { Repository } from 'typeorm';
-import { Rating } from '../entities/ranting.entity';
-import { RideService } from '../ride/ride.service';
-import { UserService } from '../user/user.service';
+import { Customer } from '../entities/customer.entity';
+import { Rating } from '../entities/rating.entity';
+import { Ride } from '../entities/ride.entity';
+import { Rider } from '../entities/rider.entity';
 import { CreateRatingDto } from './dto/create-rating.dto';
 export declare class RatingService {
-    private ratingRepository;
-    private readonly userService;
-    private readonly rideService;
-    constructor(ratingRepository: Repository<Rating>, userService: UserService, rideService: RideService);
+    private readonly ratingRepository;
+    private readonly customerRepository;
+    private readonly riderRepository;
+    private readonly rideRepository;
+    constructor(ratingRepository: Repository<Rating>, customerRepository: Repository<Customer>, riderRepository: Repository<Rider>, rideRepository: Repository<Ride>);
     create(createRatingDto: CreateRatingDto): Promise<Rating>;
-    findByRide(rideId: number): Promise<Rating[]>;
-    findByUser(userId: number): Promise<Rating[]>;
+    findAll(page?: number, limit?: number): Promise<Rating[]>;
 }

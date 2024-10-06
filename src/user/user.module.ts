@@ -1,5 +1,6 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AddressModule } from 'src/address/address.module';
 import { Address } from 'src/entities/address.entity';
 import { MessageModule } from 'src/message/message.module';
 import { CustomerModule } from '../customer/customer.module'; // Import CustomerModule
@@ -16,6 +17,7 @@ import { UserService } from './user.service';
     forwardRef(() => RiderModule), // Avoid circular dependency
     forwardRef(() => CustomerModule),
     forwardRef(() => MessageModule),
+    forwardRef(() => AddressModule),
   ],
   providers: [UserService],
   controllers: [UserController],

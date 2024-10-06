@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Customer = void 0;
 const typeorm_1 = require("typeorm");
+const rating_entity_1 = require("./rating.entity");
 const user_entity_1 = require("./user.entity");
 let Customer = class Customer extends user_entity_1.User {
 };
@@ -19,6 +20,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
 ], Customer.prototype, "loyaltyPoints", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => rating_entity_1.Rating, (rating) => rating.customer),
+    __metadata("design:type", Array)
+], Customer.prototype, "ratings", void 0);
 exports.Customer = Customer = __decorate([
     (0, typeorm_1.ChildEntity)()
 ], Customer);

@@ -1,6 +1,5 @@
 import { Address } from './address.entity';
 import { Message } from './message.entity';
-import { Rating } from './ranting.entity';
 export declare class User {
     id: number;
     name: string;
@@ -13,6 +12,4 @@ export declare class User {
     address: Address;
     sentMessages: Message[];
     receivedMessages: Message[];
-    givenRatings: Rating[];
-    receivedRatings: Rating[];
 }

@@ -1,6 +1,6 @@
 import { Car } from './car.entity';
 import { Location } from './location.entity';
-import { Rating } from './ranting.entity';
+import { Rating } from './rating.entity';
 import { Rider } from './rider.entity';
 export declare enum RideStatus {
     ACTIVE = "ACTIVE",

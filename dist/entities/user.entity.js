@@ -14,7 +14,6 @@ const bcrypt = require("bcrypt");
 const typeorm_1 = require("typeorm");
 const address_entity_1 = require("./address.entity");
 const message_entity_1 = require("./message.entity");
-const ranting_entity_1 = require("./ranting.entity");
 let User = class User {
     async hashPassword() {
         this.encryptedPassword = await bcrypt.hash(this.encryptedPassword, 10);
@@ -68,14 +67,6 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => message_entity_1.Message, (message) => message.receiver),
     __metadata("design:type", Array)
 ], User.prototype, "receivedMessages", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => ranting_entity_1.Rating, (rating) => rating.rater),
-    __metadata("design:type", Array)
-], User.prototype, "givenRatings", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => ranting_entity_1.Rating, (rating) => rating.ratee),
-    __metadata("design:type", Array)
-], User.prototype, "receivedRatings", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)(),
     (0, typeorm_1.TableInheritance)({ column: { type: 'varchar', name: 'userType' } })

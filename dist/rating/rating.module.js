@@ -9,9 +9,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RatingModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const ranting_entity_1 = require("../entities/ranting.entity");
-const ride_module_1 = require("../ride/ride.module");
-const user_module_1 = require("../user/user.module");
+const customer_module_1 = require("../customer/customer.module");
+const rider_module_1 = require("../rider/rider.module");
+const customer_entity_1 = require("../entities/customer.entity");
+const rating_entity_1 = require("../entities/rating.entity");
+const ride_entity_1 = require("../entities/ride.entity");
+const rider_entity_1 = require("../entities/rider.entity");
 const rating_controller_1 = require("./rating.controller");
 const rating_service_1 = require("./rating.service");
 let RatingModule = class RatingModule {
@@ -20,13 +23,12 @@ exports.RatingModule = RatingModule;
 exports.RatingModule = RatingModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([ranting_entity_1.Rating]),
-            (0, common_1.forwardRef)(() => ride_module_1.RideModule),
-            (0, common_1.forwardRef)(() => user_module_1.UserModule),
+            typeorm_1.TypeOrmModule.forFeature([rating_entity_1.Rating, customer_entity_1.Customer, rider_entity_1.Rider, ride_entity_1.Ride]),
+            (0, common_1.forwardRef)(() => customer_module_1.CustomerModule),
+            (0, common_1.forwardRef)(() => rider_module_1.RiderModule),
         ],
         providers: [rating_service_1.RatingService],
         controllers: [rating_controller_1.RatingController],
-        exports: [rating_service_1.RatingService],
     })
 ], RatingModule);
 //# sourceMappingURL=rating.module.js.map

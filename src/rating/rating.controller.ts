@@ -1,23 +1,27 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Rating } from '../entities/rating.entity';
 import { CreateRatingDto } from './dto/create-rating.dto';
 import { RatingService } from './rating.service';
 
+@ApiTags('ratings')
 @Controller('ratings')
 export class RatingController {
   constructor(private readonly ratingService: RatingService) {}
 
   @Post()
-  create(@Body() createRatingDto: CreateRatingDto) {
+  @ApiOperation({ summary: 'Create a new rating' })
+  async create(@Body() createRatingDto: CreateRatingDto): Promise<Rating> {
     return this.ratingService.create(createRatingDto);
   }
 
-  @Get('ride/:rideId')
-  findByRide(@Param('rideId') rideId: string) {
-    return this.ratingService.findByRide(+rideId);
-  }
-
-  @Get('user/:userId')
-  findByUser(@Param('userId') userId: string) {
-    return this.ratingService.findByUser(+userId);
+  @Get()
+  @ApiOperation({ summary: 'Get all ratings with pagination' })
+  async findAll(
+    @Query('page') page = 1,
+    @Query('limit') limit = 10,
+  ): Promise<Rating[]> {
+    return this.ratingService.findAll(page, limit);
   }
 }
+
