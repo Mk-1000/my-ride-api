@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Car = void 0;
 const typeorm_1 = require("typeorm");
+const image_entity_1 = require("./image.entity");
 const rider_entity_1 = require("./rider.entity");
 let Car = class Car {
 };
@@ -39,6 +40,10 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => rider_entity_1.Rider, (rider) => rider.cars, { onDelete: 'CASCADE' }),
     __metadata("design:type", rider_entity_1.Rider)
 ], Car.prototype, "rider", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => image_entity_1.Image, (image) => image.car),
+    __metadata("design:type", Array)
+], Car.prototype, "images", void 0);
 exports.Car = Car = __decorate([
     (0, typeorm_1.Entity)()
 ], Car);

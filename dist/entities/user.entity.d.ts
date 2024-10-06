@@ -1,4 +1,5 @@
 import { Address } from './address.entity';
+import { Image } from './image.entity';
 import { Message } from './message.entity';
 export declare class User {
     id: number;
@@ -12,4 +13,5 @@ export declare class User {
     address: Address;
     sentMessages: Message[];
     receivedMessages: Message[];
+    images: Image[];
 }

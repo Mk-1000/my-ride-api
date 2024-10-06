@@ -1,8 +1,8 @@
 import * as bcrypt from 'bcrypt';
 import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, TableInheritance } from 'typeorm';
 import { Address } from './address.entity';
+import { Image } from './image.entity';
 import { Message } from './message.entity';
-
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'userType' } })
@@ -42,4 +42,7 @@ export class User {
 
   @OneToMany(() => Message, (message) => message.receiver)
   receivedMessages: Message[];
+
+  @OneToMany(() => Image, (image) => image.user)
+  images: Image[];
 }
