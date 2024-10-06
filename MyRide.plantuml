@@ -73,7 +73,7 @@ class Booking #LightSeaGreen {
   +status: BookingStatus
 }
 
-class Rating {
+class Rating #LightSeaGreen {
   +id: Long
   +ride: Ride
   +rater: User
@@ -133,9 +133,9 @@ Rider "1" -- "0..*" Ride #LightSeaGreen : creates
 Ride "0..*" -- "1" Car #LightSeaGreen : uses
 Ride "1" -- "0..*" Booking #LightSeaGreen : hasBookings
 Customer "0..*" -- "0..*" Booking #LightSeaGreen : books
-Ride "1" -- "0..*" Rating: receives
-User "1" -- "0..*" Rating: givesRating
-User "1" -- "0..*" Rating: receivesRating
+Ride "1" -- "0..*" Rating #LightSeaGreen : receives
+User "1" -- "0..*" Rating #LightSeaGreen : givesRating
+User "1" -- "0..*" Rating #LightSeaGreen : receivesRating
 User "1" -- "0..*" Message #LightSeaGreen : sends
 User "1" -- "0..*" Message #LightSeaGreen : receives
 Ride "1" -- "1" Location #LightSeaGreen : startLocation

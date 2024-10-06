@@ -33,26 +33,26 @@ let RatingService = class RatingService {
         if (!ride) {
             throw new common_1.NotFoundException(`Ride with ID ${rideId} not found`);
         }
-        let existingRating;
+        let existingRating = null;
         if (createRatingDto.type == rating_entity_1.RatingType.CustomerToRider) {
             existingRating = await this.ratingRepository.findOne({
                 where: {
                     ride: { id: rideId },
-                    ...(type === rating_entity_1.RatingType.CustomerToRider
-                        ? { customer: { id: raterId }, rider: { id: ratedId } }
-                        : { rider: { id: raterId }, customer: { id: ratedId } }),
+                    type: rating_entity_1.RatingType.CustomerToRider,
+                    customer: { id: raterId }, rider: { id: ratedId },
                 },
             });
         }
         else {
-            existingRating = await this.ratingRepository.findOne({
-                where: {
-                    ride: { id: rideId },
-                    ...(type === rating_entity_1.RatingType.RiderToCustomer
-                        ? { customer: { id: raterId }, rider: { id: ratedId } }
-                        : { rider: { id: raterId }, customer: { id: ratedId } }),
-                },
-            });
+            if (createRatingDto.type == rating_entity_1.RatingType.RiderToCustomer) {
+                existingRating = await this.ratingRepository.findOne({
+                    where: {
+                        ride: { id: rideId },
+                        type: rating_entity_1.RatingType.RiderToCustomer,
+                        rider: { id: raterId }, customer: { id: ratedId },
+                    },
+                });
+            }
         }
         if (existingRating) {
             throw new common_1.NotFoundException(`Rating for this ride by this rater already exists in direction ${type}`);

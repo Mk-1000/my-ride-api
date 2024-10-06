@@ -29,34 +29,34 @@ export class RatingService {
         throw new NotFoundException(`Ride with ID ${rideId} not found`);
     }
 
-    // Prevent duplicate ratings in the same direction
-    let existingRating 
+    // Check for existing ratings
+    let existingRating=null
     if(createRatingDto.type== RatingType.CustomerToRider){
         existingRating = await this.ratingRepository.findOne({
             where: {
-                ride: { id: rideId },
-                ...(type === RatingType.CustomerToRider
-                    ? { customer: { id: raterId }, rider: { id: ratedId } }
-                    : { rider: { id: raterId }, customer: { id: ratedId } }),
+                ride: { id: rideId }, 
+                type : RatingType.CustomerToRider,
+                customer: { id: raterId }, rider: { id: ratedId } ,
             },
         });
     }else{
-        existingRating = await this.ratingRepository.findOne({
-            where: {
-                ride: { id: rideId },
-                ...(type === RatingType.RiderToCustomer
-                    ? { customer: { id: raterId }, rider: { id: ratedId } }
-                    : { rider: { id: raterId }, customer: { id: ratedId } }),
-            },
-        });
+        if(createRatingDto.type== RatingType.RiderToCustomer){
+            existingRating = await this.ratingRepository.findOne({
+                where: {
+                    ride: { id: rideId },
+                    type : RatingType.RiderToCustomer,
+                    rider: { id: raterId }, customer: { id: ratedId } ,
+                },
+            });
+        }
     }
-
 
     // If an existing rating is found, throw an exception
     if (existingRating) {
         throw new NotFoundException(`Rating for this ride by this rater already exists in direction ${type}`);
     }
 
+    // Create new rating
     const rating = new Rating();
     rating.score = score;
     rating.comments = comments;
@@ -84,6 +84,7 @@ export class RatingService {
 
     return this.ratingRepository.save(rating);
 }
+
 
   async findAll(page = 1, limit = 10): Promise<Rating[]> {
     return this.ratingRepository.find({
