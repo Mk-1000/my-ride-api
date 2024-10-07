@@ -12,6 +12,7 @@ import { RideModule } from './ride/ride.module';
 import { RiderModule } from './rider/rider.module';
 import { UserModule } from './user/user.module';
 import { ImageModule } from './image/image.module';
+import { VerificationModule } from './verification/verification.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { ImageModule } from './image/image.module';
     BookingModule,
     RatingModule,
     ImageModule,
+    VerificationModule,
   ],
 
 })

@@ -21,6 +21,7 @@ const ride_module_1 = require("./ride/ride.module");
 const rider_module_1 = require("./rider/rider.module");
 const user_module_1 = require("./user/user.module");
 const image_module_1 = require("./image/image.module");
+const verification_module_1 = require("./verification/verification.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -51,6 +52,7 @@ exports.AppModule = AppModule = __decorate([
             booking_module_1.BookingModule,
             rating_module_1.RatingModule,
             image_module_1.ImageModule,
+            verification_module_1.VerificationModule,
         ],
     })
 ], AppModule);

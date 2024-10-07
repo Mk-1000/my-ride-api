@@ -92,7 +92,7 @@ class Message #LightSeaGreen {
   +status: MessageStatus
 }
 
-class Image {
+class Image #LightSeaGreen {
   +id: Long
   +url: String
   +uploadedAt: Date
@@ -141,8 +141,8 @@ Customer "1" -- "1" Verification: hasCin
 Rider "1" --* "1" Verification : hasLicence
 User "1" -- "1" Address #LightSeaGreen: has
 
-User "1" -- "0..*" Image: uploads
-Car "1" -- "1" Image: carImage
+User "1" -- "0..*" Image #LightSeaGreen : uploads
+Car "1" -- "1" Image #LightSeaGreen : carImage
 Verification "1" -- "1" Image: documentImage
 Verification "1" -- "1" Image: selfieWithDocument
 
