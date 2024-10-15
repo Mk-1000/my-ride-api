@@ -28,7 +28,7 @@ class Rider #LightSeaGreen {
   +licenseCard: Verification
 }
 
-class Verification {
+class Verification #LightSeaGreen  {
   +id: Long
   +documentNumber: String
   +documentImageUrl: Image
@@ -101,7 +101,7 @@ class Image #LightSeaGreen {
   +visibility: Bool
 }
 
-enum ImageType {
+enum ImageType{
   PROFILE
   DOCUMENT
   CAR

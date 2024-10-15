@@ -22,18 +22,19 @@ export class UserService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const saltRounds = 10; // Number of rounds for hashing
+    const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(createUserDto.password, saltRounds);
     
-    // Create a new user object without the plaintext password
+    // Create a new user object with hashed password
     const newUser = this.userRepository.create({
       ...createUserDto,
-      encryptedPassword: hashedPassword, // Use hashed password instead
+      encryptedPassword: hashedPassword, // store the hashed password
       address: createUserDto.address,
     });
-
+  
     return this.userRepository.save(newUser);
   }
+  
 
   async login(loginUserDto: LoginUserDto): Promise<User> {
     const user = await this.userRepository.findOne({ where: { email: loginUserDto.email } });
@@ -41,15 +42,20 @@ export class UserService {
       throw new UnauthorizedException('Invalid credentials');
     }
   
+    console.log('User found:', user);
+    console.log('Input password:', loginUserDto.password);
+    console.log('Stored hashed password:', user.encryptedPassword);
+  
     const isMatch = await bcrypt.compare(loginUserDto.password, user.encryptedPassword);
     if (!isMatch) {
+      console.log('Password does not match');
       throw new UnauthorizedException('Invalid credentials');
     }
   
-    return user; // Return user or some token if needed
+    console.log('Password matched');
+    return user;
   }
   
-
   async remove(id: number): Promise<void> {
     await this.userRepository.delete(id);
   }

@@ -1,5 +1,4 @@
-import * as bcrypt from 'bcrypt';
-import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, TableInheritance } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, TableInheritance } from 'typeorm';
 import { Address } from './address.entity';
 import { Image } from './image.entity';
 import { Message } from './message.entity';
@@ -19,10 +18,10 @@ export class User {
   @Column()
   encryptedPassword: string;
 
-  @BeforeInsert()
-  async hashPassword() {
-    this.encryptedPassword = await bcrypt.hash(this.encryptedPassword, 10);
-  }
+  // @BeforeInsert()
+  // async hashPassword() {
+  //   this.encryptedPassword = await bcrypt.hash(this.encryptedPassword, 10);
+  // }
 
   @Column({ nullable: true })
   phoneNumber: string;

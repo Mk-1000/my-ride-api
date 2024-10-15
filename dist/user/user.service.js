@@ -43,10 +43,15 @@ let UserService = class UserService {
         if (!user) {
             throw new common_1.UnauthorizedException('Invalid credentials');
         }
+        console.log('User found:', user);
+        console.log('Input password:', loginUserDto.password);
+        console.log('Stored hashed password:', user.encryptedPassword);
         const isMatch = await bcrypt.compare(loginUserDto.password, user.encryptedPassword);
         if (!isMatch) {
+            console.log('Password does not match');
             throw new common_1.UnauthorizedException('Invalid credentials');
         }
+        console.log('Password matched');
         return user;
     }
     async remove(id) {

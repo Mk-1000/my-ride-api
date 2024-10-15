@@ -10,15 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
-const bcrypt = require("bcrypt");
 const typeorm_1 = require("typeorm");
 const address_entity_1 = require("./address.entity");
 const image_entity_1 = require("./image.entity");
 const message_entity_1 = require("./message.entity");
 let User = class User {
-    async hashPassword() {
-        this.encryptedPassword = await bcrypt.hash(this.encryptedPassword, 10);
-    }
 };
 exports.User = User;
 __decorate([
@@ -37,12 +33,6 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], User.prototype, "encryptedPassword", void 0);
-__decorate([
-    (0, typeorm_1.BeforeInsert)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], User.prototype, "hashPassword", null);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)

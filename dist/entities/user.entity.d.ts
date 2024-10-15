@@ -6,7 +6,6 @@ export declare class User {
     name: string;
     email: string;
     encryptedPassword: string;
-    hashPassword(): Promise<void>;
     phoneNumber: string;
     profilePictureUrl: string;
     userType: string;
