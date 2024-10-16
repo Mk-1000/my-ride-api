@@ -14,9 +14,10 @@ import { RatingService } from './rating.service';
     TypeOrmModule.forFeature([Rating, Customer, Rider, Ride]),
     forwardRef(() => CustomerModule),
     forwardRef(() => RiderModule),
-
   ],
   providers: [RatingService],
   controllers: [RatingController],
+  exports: [TypeOrmModule, RatingService],
 })
 export class RatingModule {}
+

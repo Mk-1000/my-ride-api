@@ -18,11 +18,6 @@ export class User {
   @Column()
   encryptedPassword: string;
 
-  // @BeforeInsert()
-  // async hashPassword() {
-  //   this.encryptedPassword = await bcrypt.hash(this.encryptedPassword, 10);
-  // }
-
   @Column({ nullable: true })
   phoneNumber: string;
 
@@ -32,16 +27,17 @@ export class User {
   @Column({ default: 'CUSTOMER' })
   userType: string;
 
-  @OneToOne(() => Address, { cascade: true, eager: true })
+  @OneToOne(() => Address, { cascade: true })
   @JoinColumn()
   address: Address;
 
-  @OneToMany(() => Message, (message) => message.sender)
+  @OneToMany(() => Message, (message) => message.sender, { cascade: ['remove'] })
   sentMessages: Message[];
 
-  @OneToMany(() => Message, (message) => message.receiver)
+  @OneToMany(() => Message, (message) => message.receiver, { cascade: ['remove'] })
   receivedMessages: Message[];
 
-  @OneToMany(() => Image, (image) => image.user)
+  @OneToMany(() => Image, (image) => image.user, { cascade: ['remove'] })
   images: Image[];
+  
 }

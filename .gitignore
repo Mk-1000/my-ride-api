@@ -128,3 +128,13 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# NestJS specific entries
+dist/
+*.js
+*.d.ts
+*.map
+
+# Additional node modules and directories that might be generated
+/src/**/*.module.ts
+/src/**/*.spec.ts

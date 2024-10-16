@@ -1,6 +1,7 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
+import { Rating } from 'src/entities/rating.entity';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -11,6 +12,8 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(Rating)
+    private ratingRepository: Repository<Rating>,
   ) {}
 
   async findAll(): Promise<User[]> {
@@ -57,6 +60,20 @@ export class UserService {
   }
   
   async remove(id: number): Promise<void> {
-    await this.userRepository.delete(id);
+    const user = await this.userRepository.findOne({ where: { id } });
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    // Delete all ratings related to this user
+    await this.ratingRepository.delete({ rider: { id }, customer: { id } });
+
+    // Proceed to delete the user
+    const result = await this.userRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
   }
+  
 }

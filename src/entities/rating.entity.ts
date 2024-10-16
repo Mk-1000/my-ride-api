@@ -25,13 +25,14 @@ export class Rating {
   @Column({ nullable: true })
   comments: string;
 
-  @ManyToOne(() => Customer, (customer) => customer.ratings, { nullable: true })
+  @ManyToOne(() => Customer, (customer) => customer.ratings, { nullable: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'customer_id' })
   customer: Customer;
-
-  @ManyToOne(() => Rider, (rider) => rider.ratings, { nullable: true })
+  
+  @ManyToOne(() => Rider, (rider) => rider.ratings, { nullable: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'rider_id' })
   rider: Rider;
+  
 
   @ManyToOne(() => Ride, (ride) => ride.ratings)
   @JoinColumn({ name: 'ride_id' })
