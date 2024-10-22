@@ -27,7 +27,7 @@ import { VerificationModule } from './verification/verification.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
     }),
     UserModule,
     RiderModule,
