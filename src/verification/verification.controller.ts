@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Verification } from '../entities/verification.entity';
 import { CreateVerificationDto } from './dto/create-verification.dto';
@@ -35,5 +35,11 @@ export class VerificationController {
   @ApiOperation({ summary: 'Get a verification request by ID' })
   async findOne(@Param('id') id: number): Promise<Verification> {
     return this.verificationService.findOne(id);
+  }
+  
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete a verification request' })
+  async deleteVerification(@Param('id') id: number): Promise<void> {
+    return this.verificationService.delete(id);
   }
 }
