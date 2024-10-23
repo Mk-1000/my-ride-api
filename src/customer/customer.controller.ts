@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Customer } from '../entities/customer.entity';
 import { CustomerService } from './customer.service';
@@ -20,4 +20,17 @@ export class CustomerController {
   async findAll(): Promise<Customer[]> {
     return this.customerService.findAll();
   }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get a customer by ID' })
+  async findOne(@Param('id') id: number): Promise<Customer> {
+    const rider = await this.customerService.findOne(id);
+    
+    if (!rider) {
+      throw new NotFoundException(`Customer with ID ${id} not found`);
+    }
+
+    return rider;
+  }
+  
 }

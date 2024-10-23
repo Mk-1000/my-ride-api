@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Rider } from '../entities/rider.entity';
 import { CreateRiderDto } from './dto/create-rider.dto';
@@ -19,5 +19,17 @@ export class RiderController {
   @ApiOperation({ summary: 'Get all riders' })
   async findAll(): Promise<Rider[]> {
     return this.riderService.findAll();
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get a rider by ID' })
+  async findOne(@Param('id') id: number): Promise<Rider> {
+    const rider = await this.riderService.findOne(id);
+    
+    if (!rider) {
+      throw new NotFoundException(`Rider with ID ${id} not found`);
+    }
+
+    return rider;
   }
 }

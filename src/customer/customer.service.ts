@@ -60,13 +60,17 @@ export class CustomerService {
 
   // Retrieve all customers
   async findAll(): Promise<Customer[]> {
-    return this.customerRepository.find(); // No need for 'user' relation as Customer extends User
+    return this.customerRepository.find({
+      relations: ['cinVerification'],
+    });
   }
 
   // Find a specific customer by ID
   async findOne(id: number): Promise<Customer> {
-    const customer = await this.customerRepository.findOne({ where: { id } });
-
+    const customer = await this.customerRepository.findOne({
+      where: { id },
+      relations: ['cinVerification'],
+    });
     if (!customer) {
       throw new NotFoundException(`Customer with ID ${id} not found`);
     }

@@ -59,12 +59,17 @@ export class RiderService {
 
   // Find all riders
   async findAll(): Promise<Rider[]> {
-    return this.riderRepository.find();
+    return this.riderRepository.find({
+      relations: ['licenseVerification'], // Include related verification
+    });
   }
 
   // Find a specific rider by ID
   async findOne(id: number): Promise<Rider> {
-    const rider = await this.riderRepository.findOne({ where: { id } });
+    const rider = await this.riderRepository.findOne({
+      where: { id },
+      relations: ['licenseVerification'],
+    });
 
     if (!rider) {
       throw new NotFoundException(`Rider with ID ${id} not found`);
