@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
-import * as FormData from 'form-data'; // For handling form-data uploads
+import * as FormData from 'form-data';
 import * as fs from 'fs';
 import { ImageService } from 'src/image/image.service';
 import { Repository } from 'typeorm';
@@ -14,7 +14,7 @@ export class VerificationService {
   constructor(
     @InjectRepository(Verification)
     private verificationRepository: Repository<Verification>,
-    private imageService: ImageService, // Inject the ImageService
+    private imageService: ImageService,
   ) {}
 
   async create(createVerificationDto: CreateVerificationDto): Promise<Verification> {
@@ -24,39 +24,38 @@ export class VerificationService {
     console.log(`Verification created with ID: ${savedVerification.id}`);
 
     try {
-        const documentId = savedVerification.id;
-        const documentImage = await this.imageService.createImage(createVerificationDto.documentImageUrl, createVerificationDto.documentImageUrl.url, documentId);
-        const selfieImage = await this.imageService.createImage(createVerificationDto.selfieWithDocumentUrl, createVerificationDto.selfieWithDocumentUrl.url, documentId);
+      const documentId = savedVerification.id;
+      const documentImage = await this.imageService.createImage(createVerificationDto.documentImage, createVerificationDto.documentImage.url, documentId);
+      const selfieImage = await this.imageService.createImage(createVerificationDto.selfieImage, createVerificationDto.selfieImage.url, documentId);
 
-        verification.documentImageUrl.url = documentImage.url;
-        verification.selfieWithDocumentUrl.url = selfieImage.url;
+      // Set the image URLs correctly
+      savedVerification.documentImage = documentImage; // assuming documentImage is a relation
+      savedVerification.selfieImage = selfieImage; // assuming selfieImage is a relation
 
-        await this.verificationRepository.save(verification);
+      await this.verificationRepository.save(savedVerification);
 
-        // Trigger background verification after successful creation
-        setImmediate(() => {
-            console.log(`Triggering verification for ID: ${savedVerification.id}`);
-            this.verifyImages(savedVerification.id);
-        });
+      // Trigger background verification after successful creation
+      setImmediate(() => {
+        console.log(`Triggering verification for ID: ${savedVerification.id}`);
+        this.verifyImages(savedVerification.id);
+      });
 
     } catch (error) {
-        console.error('Error saving images:', error);
-        throw new Error('Failed to save images for verification');
+      console.error('Error saving images:', error);
+      throw new InternalServerErrorException('Failed to save images for verification');
     }
 
-    return verification;
+    return savedVerification;
   }
-  
-  
 
   async findAll(): Promise<Verification[]> {
-    return this.verificationRepository.find({ relations: ['documentImageUrl', 'selfieWithDocumentUrl'] });
+    return this.verificationRepository.find({ relations: ['documentImage', 'selfieImage'] }); // Adjusted relations
   }
 
   async findOne(id: number): Promise<Verification> {
     const verification = await this.verificationRepository.findOne({
       where: { id },
-      relations: ['documentImageUrl', 'selfieWithDocumentUrl'],
+      relations: ['documentImage', 'selfieImage'], // Adjusted relations
     });
 
     if (!verification) {
@@ -86,16 +85,17 @@ export class VerificationService {
     try {
       const verification = await this.findOne(id);
 
-      if (!verification) {
-        throw new NotFoundException(`Verification with ID ${id} not found`);
-      }
+      const documentImageUrl = verification.documentImage?.url; // Use optional chaining
+      const selfieImageUrl = verification.selfieImage?.url; // Use optional chaining
 
-      const documentImageUrl = verification.documentImageUrl.url;
-      const selfieWithDocumentUrl = verification.selfieWithDocumentUrl.url;
+      // Ensure both URLs are valid before proceeding
+      if (!documentImageUrl || !selfieImageUrl) {
+        throw new Error(`Image URLs are missing for Verification ID ${id}`);
+      }
 
       // Read the image files
       const documentImage = fs.createReadStream(documentImageUrl);
-      const selfieImage = fs.createReadStream(selfieWithDocumentUrl);
+      const selfieImage = fs.createReadStream(selfieImageUrl);
 
       // Prepare form-data for Flask API
       const formData = new FormData();
@@ -118,7 +118,8 @@ export class VerificationService {
         // Update verification status to REJECTED if not matching
         verification.verificationStatus = VerificationStatus.REJECTED;
       }
-
+      
+      verification.verifiedBy = "FaceMatch" ;
       verification.verificationDate = new Date();
       await this.verificationRepository.save(verification);
 

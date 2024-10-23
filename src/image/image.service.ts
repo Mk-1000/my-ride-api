@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Repository } from 'typeorm';
-import { Image } from '../entities/image.entity';
+import { Image, ImageType } from '../entities/image.entity';
 import { CreateImageDto } from './dto/create-image.dto';
 
 @Injectable()
@@ -13,8 +13,8 @@ export class ImageService {
     private imageRepository: Repository<Image>,
   ) {}
 
-  private createDirectory(documentId: number): string {
-    const directoryPath = path.join(__dirname, '..', '..', 'uploads', 'DOCUMENT', documentId.toString());
+  private createDirectory(documentId: number , imageType: ImageType): string {
+    const directoryPath = path.join(__dirname, '..', '..', 'uploads', imageType, documentId.toString());
     if (!fs.existsSync(directoryPath)) {
       fs.mkdirSync(directoryPath, { recursive: true });
       console.log(`Directory created at: ${directoryPath}`);
@@ -23,7 +23,7 @@ export class ImageService {
   }
 
   async createImage(createImageDto: CreateImageDto, filePath: string, documentId: number): Promise<Image> {
-    const directoryPath = this.createDirectory(documentId);
+    const directoryPath = this.createDirectory(documentId, createImageDto.imageType);
     const fileName = path.basename(filePath);
     const newFilePath = path.join(directoryPath, fileName);
 

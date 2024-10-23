@@ -5,13 +5,13 @@ import { AddressModule } from './address/address.module';
 import { BookingModule } from './booking/booking.module';
 import { CarModule } from './car/car.module';
 import { CustomerModule } from './customer/customer.module';
+import { ImageModule } from './image/image.module';
 import { LocationModule } from './location/location.module';
 import { MessageModule } from './message/message.module';
 import { RatingModule } from './rating/rating.module';
 import { RideModule } from './ride/ride.module';
 import { RiderModule } from './rider/rider.module';
 import { UserModule } from './user/user.module';
-import { ImageModule } from './image/image.module';
 import { VerificationModule } from './verification/verification.module';
 
 @Module({
@@ -27,7 +27,7 @@ import { VerificationModule } from './verification/verification.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       autoLoadEntities: true,
-      synchronize: false,
+      synchronize: true,
     }),
     UserModule,
     RiderModule,

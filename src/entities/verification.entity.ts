@@ -18,11 +18,11 @@ export class Verification {
 
   @OneToOne(() => Image, { cascade: true })
   @JoinColumn()
-  documentImageUrl: Image;
+  documentImage: Image;
 
   @OneToOne(() => Image, { cascade: true })
   @JoinColumn()
-  selfieWithDocumentUrl: Image;
+  selfieImage: Image;
 
   @Column({
     type: 'enum',
