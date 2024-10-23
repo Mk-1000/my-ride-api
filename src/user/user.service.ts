@@ -21,7 +21,10 @@ export class UserService {
   }
 
   async findOne(id: number): Promise<User> {
-    return this.userRepository.findOneBy({ id });
+    return this.userRepository.findOne({
+      where: { id },
+      relations: ['address', 'sentMessages', 'receivedMessages', 'images', 'cinVerification', 'licenseVerification'],
+    });
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {

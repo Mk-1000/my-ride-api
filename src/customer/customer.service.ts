@@ -1,6 +1,7 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
+import { UserType } from 'src/entities/user.entity';
 import { VerificationService } from 'src/verification/verification.service';
 import { Repository } from 'typeorm';
 import { Customer } from '../entities/customer.entity';
@@ -29,7 +30,7 @@ export class CustomerService {
         ...createCustomerDto.user,
         encryptedPassword: hashedPassword,
         loyaltyPoints: createCustomerDto.loyaltyPoints,
-        userType: 'CUSTOMER',
+        userType: UserType.CUSTOMER,
       });
 
       // Save the customer entity to the database

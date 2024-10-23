@@ -3,6 +3,11 @@ import { Address } from './address.entity';
 import { Image } from './image.entity';
 import { Message } from './message.entity';
 
+export enum UserType {
+  CUSTOMER = 'CUSTOMER',
+  RIDER = 'RIDER',
+}
+
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'userType' } })
 export class User {
@@ -25,7 +30,7 @@ export class User {
   profilePictureUrl: string;
 
   @Column({ default: 'CUSTOMER' })
-  userType: string;
+  userType: UserType;
 
   @OneToOne(() => Address, { cascade: true })
   @JoinColumn()

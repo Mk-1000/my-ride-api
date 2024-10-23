@@ -2,6 +2,7 @@ import { Injectable, InternalServerErrorException, NotFoundException } from '@ne
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { ImageType } from 'src/entities/image.entity';
+import { UserType } from 'src/entities/user.entity';
 import { VerificationService } from 'src/verification/verification.service';
 import { Repository } from 'typeorm';
 import { Rider } from '../entities/rider.entity';
@@ -27,7 +28,7 @@ export class RiderService {
       newRider = this.riderRepository.create({
         ...createRiderDto.user,
         encryptedPassword: hashedPassword,
-        userType: 'RIDER',
+        userType: UserType.RIDER,
       });
 
       // Save the rider entity to the database
