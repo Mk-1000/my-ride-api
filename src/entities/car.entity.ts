@@ -22,6 +22,7 @@ export class Car {
   @ManyToOne(() => Rider, (rider) => rider.cars, { onDelete: 'CASCADE' })  // A rider can have multiple cars
   rider: Rider;
 
-  @OneToMany(() => Image, (image) => image.car)
+  @OneToMany(() => Image, (image) => image.car, { cascade: true }) // Cascade on save
   images: Image[];
+  
 }

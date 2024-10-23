@@ -28,22 +28,22 @@ export class ImageService {
     const newFilePath = path.join(directoryPath, fileName);
 
     try {
-      // Copy the file instead of moving it
-      fs.copyFileSync(filePath, newFilePath); // Use copyFileSync to retain the original file
+        fs.copyFileSync(filePath, newFilePath); // Copy the file
     } catch (error) {
-      console.error(`Error copying file from ${filePath} to ${newFilePath}: ${error.message}`);
-      throw new Error('Failed to copy the file'); // Propagate the error if file copying fails
+        console.error(`Error copying file from ${filePath} to ${newFilePath}: ${error.message}`);
+        throw new Error('Failed to copy the file');
     }
 
-    const absolutePath = path.resolve(newFilePath); // Get the absolute path
-
+    const absolutePath = path.resolve(newFilePath);
     const newImage = this.imageRepository.create({
-      ...createImageDto,
-      url: absolutePath, // Store the full absolute path as the image URL
+        ...createImageDto,
+        url: absolutePath,
+        car: { id: documentId }, // Ensure that the car is associated correctly
     });
 
     return this.imageRepository.save(newImage);
   }
+
 
   async findAll(): Promise<Image[]> {
     return this.imageRepository.find();

@@ -1,6 +1,7 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BookingModule } from 'src/booking/booking.module';
+import { ImageModule } from 'src/image/image.module';
 import { LocationModule } from 'src/location/location.module';
 import { VerificationModule } from 'src/verification/verification.module';
 import { CarService } from '../car/car.service';
@@ -18,6 +19,7 @@ import { RideService } from './ride.service';
     forwardRef(() => BookingModule), // Using forwardRef to prevent circular dependency
     forwardRef(() => VerificationModule),
     UserModule,
+    ImageModule,
     LocationModule,
   ],
   providers: [RideService, RiderService, CarService],

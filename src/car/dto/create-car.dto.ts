@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { CreateImageDto } from 'src/image/dto/create-image.dto';
 
 export class CreateCarDto {
   @ApiProperty({ example: 'Toyota', description: 'Car make' })
@@ -18,4 +19,7 @@ export class CreateCarDto {
 
   @ApiProperty({ example: 1, description: 'Rider ID' })
   riderId: number; 
+
+  @ApiProperty({ description: 'Array of car images', type: [CreateImageDto], required: false })
+  images?: CreateImageDto[];  // Accept an array of images
 }
