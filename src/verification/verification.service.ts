@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
 import * as FormData from 'form-data'; // For handling form-data uploads
 import * as fs from 'fs';
+import { ImageService } from 'src/image/image.service';
 import { Repository } from 'typeorm';
 import { Verification, VerificationStatus } from '../entities/verification.entity';
 import { CreateVerificationDto } from './dto/create-verification.dto';
@@ -13,17 +14,40 @@ export class VerificationService {
   constructor(
     @InjectRepository(Verification)
     private verificationRepository: Repository<Verification>,
+    private imageService: ImageService, // Inject the ImageService
   ) {}
 
   async create(createVerificationDto: CreateVerificationDto): Promise<Verification> {
     const verification = this.verificationRepository.create(createVerificationDto);
     const savedVerification = await this.verificationRepository.save(verification);
 
-    // Trigger background verification after successful creation
-    setImmediate(() => this.verifyImages(savedVerification.id));
+    console.log(`Verification created with ID: ${savedVerification.id}`);
 
-    return savedVerification;
+    try {
+        const documentId = savedVerification.id;
+        const documentImage = await this.imageService.createImage(createVerificationDto.documentImageUrl, createVerificationDto.documentImageUrl.url, documentId);
+        const selfieImage = await this.imageService.createImage(createVerificationDto.selfieWithDocumentUrl, createVerificationDto.selfieWithDocumentUrl.url, documentId);
+
+        verification.documentImageUrl.url = documentImage.url;
+        verification.selfieWithDocumentUrl.url = selfieImage.url;
+
+        await this.verificationRepository.save(verification);
+
+        // Trigger background verification after successful creation
+        setImmediate(() => {
+            console.log(`Triggering verification for ID: ${savedVerification.id}`);
+            this.verifyImages(savedVerification.id);
+        });
+
+    } catch (error) {
+        console.error('Error saving images:', error);
+        throw new Error('Failed to save images for verification');
+    }
+
+    return verification;
   }
+  
+  
 
   async findAll(): Promise<Verification[]> {
     return this.verificationRepository.find({ relations: ['documentImageUrl', 'selfieWithDocumentUrl'] });

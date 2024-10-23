@@ -138,3 +138,4 @@ dist/
 # Additional node modules and directories that might be generated
 /src/**/*.module.ts
 /src/**/*.spec.ts
+/uploads

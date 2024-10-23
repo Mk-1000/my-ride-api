@@ -39,6 +39,7 @@ myRideApi is a ride-sharing platform API built using NestJS and MySQL. The syste
 2. **Set environment variables:**
    Create a `.env` file in the root directory:
    ```env
+   BASE_URL=http://localhost:3000
    DB_HOST=localhost
    DB_PORT=3306
    DB_USERNAME=new_user
