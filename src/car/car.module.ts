@@ -9,9 +9,9 @@ import { CarService } from './car.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Car]), // Register the Car entity for TypeORM
-    forwardRef(() => ImageModule), // Use forwardRef for circular dependency
-    UserModule,
-    RiderModule // Import RiderModule to access rider-related services
+    forwardRef(() => ImageModule),
+    forwardRef(() => UserModule),
+    forwardRef(() => RiderModule),
   ],
   controllers: [CarController], // Register the CarController
   providers: [CarService], // Register the CarService

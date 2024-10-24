@@ -36,10 +36,9 @@ export class Image {
   @Column({ nullable: true })
   idReference: number;
 
-  // Relations to handle specific image types
-  @ManyToOne(() => Car, { nullable: true })
+  @ManyToOne(() => Car, car => car.images, { onDelete: 'CASCADE', nullable: true }) // Set up cascade on delete
   car: Car;
 
-  @ManyToOne(() => User, { nullable: true })
+  @ManyToOne(() => User, user => user.images, { onDelete: 'CASCADE', nullable: true  }) // Set up cascade on delete
   user: User;
 }

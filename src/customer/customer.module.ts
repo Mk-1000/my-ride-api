@@ -14,6 +14,7 @@ import { CustomerService } from './customer.service';
     forwardRef(() => UserModule), // Avoid circular dependency
     forwardRef(() => BookingModule),
 
+
   ],
   controllers: [CustomerController],
   providers: [CustomerService],

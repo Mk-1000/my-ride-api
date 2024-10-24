@@ -19,20 +19,23 @@ export class CarService {
   async create(createCarDto: CreateCarDto): Promise<Car> {
     const rider = await this.riderService.findOne(createCarDto.riderId);
 
+    // Set image type for all images provided
     createCarDto.images?.forEach(image => {
-      image.imageType = ImageType.CAR;
+        image.imageType = ImageType.CAR;
     });
 
     const car = this.carRepository.create({ ...createCarDto, rider });
     const savedCar = await this.carRepository.save(car);
 
+    // Create images and store the URLs
     await Promise.all(createCarDto.images?.map(async (image) => {
-      image.idReference = savedCar.id;
-      await this.imageService.createImage(image, image.url, savedCar.id);
+        image.idReference = savedCar.id; // Associate image with car
+        return await this.imageService.createImage(image, image.url, savedCar.id);
     }));
 
     return savedCar;
-  }
+}
+
 
   async findAll(): Promise<Car[]> {
     return this.carRepository.find({ relations: ['images'] });

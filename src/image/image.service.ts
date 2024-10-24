@@ -36,10 +36,15 @@ export class ImageService {
 
     const absolutePath = path.resolve(newFilePath);
     const newImage = this.imageRepository.create({
-        ...createImageDto,
-        url: absolutePath,
-        car: { id: documentId }, // Ensure that the car is associated correctly
+      ...createImageDto,
+      url: absolutePath,
+      ...(createImageDto.imageType === ImageType.CAR
+        ? { car: { id: documentId } }
+        : createImageDto.imageType === ImageType.PROFILE
+        ? { user: { id: documentId } }
+        : null), // Associate with Car or User
     });
+    
 
     return this.imageRepository.save(newImage);
   }

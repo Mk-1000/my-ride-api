@@ -32,7 +32,7 @@ export class User {
   @Column({ default: 'CUSTOMER' })
   userType: UserType;
 
-  @OneToOne(() => Address, { cascade: true })
+  @OneToOne(() => Address, { cascade: true, nullable: true })
   @JoinColumn()
   address: Address;
 
@@ -42,7 +42,6 @@ export class User {
   @OneToMany(() => Message, (message) => message.receiver, { cascade: ['remove'] })
   receivedMessages: Message[];
 
-  @OneToMany(() => Image, (image) => image.user, { cascade: ['remove'] })
+  @OneToMany(() => Image, (image) => image.user, { cascade: true }) // Cascade on save
   images: Image[];
-  
 }

@@ -18,9 +18,11 @@ import { RideService } from './ride.service';
     TypeOrmModule.forFeature([Ride, Rider, Car]),
     forwardRef(() => BookingModule), // Using forwardRef to prevent circular dependency
     forwardRef(() => VerificationModule),
-    UserModule,
-    ImageModule,
-    LocationModule,
+    forwardRef(() => UserModule),
+    forwardRef(() => ImageModule),
+    forwardRef(() => LocationModule),
+    
+    
   ],
   providers: [RideService, RiderService, CarService],
   controllers: [RideController],

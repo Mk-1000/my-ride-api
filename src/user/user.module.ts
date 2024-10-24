@@ -2,6 +2,7 @@ import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AddressModule } from 'src/address/address.module';
 import { Address } from 'src/entities/address.entity';
+import { ImageModule } from 'src/image/image.module';
 import { MessageModule } from 'src/message/message.module';
 import { RatingModule } from 'src/rating/rating.module';
 import { CustomerModule } from '../customer/customer.module'; // Import CustomerModule
@@ -15,11 +16,14 @@ import { UserService } from './user.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Customer, Rider,Address]),
-    RatingModule,
+    
+    forwardRef(() => ImageModule), // Use forwardRef for circular dependency
     forwardRef(() => RiderModule),
     forwardRef(() => CustomerModule),
     forwardRef(() => MessageModule),
     forwardRef(() => AddressModule),
+    forwardRef(() => RatingModule),
+
   ],
   providers: [UserService],
   controllers: [UserController],

@@ -1,7 +1,10 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
+import { ImageType } from 'src/entities/image.entity';
 import { Rating } from 'src/entities/rating.entity';
+import { CreateImageDto } from 'src/image/dto/create-image.dto';
+import { ImageService } from 'src/image/image.service';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -14,6 +17,7 @@ export class UserService {
     private userRepository: Repository<User>,
     @InjectRepository(Rating)
     private ratingRepository: Repository<Rating>,
+    private imageService: ImageService, // Inject ImageService
   ) {}
 
   async findAll(): Promise<User[]> {
@@ -27,19 +31,42 @@ export class UserService {
     });
   }
 
+  // Create user method updated to handle images
   async create(createUserDto: CreateUserDto): Promise<User> {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(createUserDto.password, saltRounds);
-    
-    // Create a new user object with hashed password
+
     const newUser = this.userRepository.create({
       ...createUserDto,
-      encryptedPassword: hashedPassword, // store the hashed password
-      address: createUserDto.address,
+      encryptedPassword: hashedPassword,
     });
-  
-    return this.userRepository.save(newUser);
+
+    const savedUser = await this.userRepository.save(newUser);
+
+    // Handle images if provided
+    try {
+      if (createUserDto.images && createUserDto.images.length > 0) {
+        const createdImages = await Promise.all(createUserDto.images.map(async (imageDto: CreateImageDto) => {
+          imageDto.imageType = ImageType.PROFILE; // Set image type if necessary
+          const createdImage = await this.imageService.createImage(imageDto, imageDto.url, savedUser.id);
+          return createdImage;
+        }));
+
+        // Set the last uploaded image as the profile picture
+        if (createdImages.length > 0) {
+          const lastImage = createdImages[createdImages.length - 1];
+          savedUser.profilePictureUrl = lastImage.url; // Assuming `url` is the property of the Image entity
+          await this.userRepository.save(savedUser); // Save the updated user with the new profile picture URL
+        }
+      }
+    } catch (error) {
+      console.error('Error saving images for user:', error);
+      throw new InternalServerErrorException('Failed to save images for user');
+    }
+
+    return savedUser;
   }
+
   
 
   async login(loginUserDto: LoginUserDto): Promise<User> {
